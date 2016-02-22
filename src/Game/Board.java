@@ -28,7 +28,7 @@ public class Board {
 		}
 	}
 	
-	public Winner winner;
+	Winner winner;
 	
 	SquareState[][] board;
 	int bR = 3;
@@ -76,7 +76,6 @@ public class Board {
 		return v;
 	}
 	private Winner calculateWinner(){
-		if(winner != winner.NONE) return winner;
 		ValueWinner vs = 
 						  existsSameValueRow()
 				.orWinner( existsSameValueCol() )
@@ -131,4 +130,9 @@ public class Board {
 		return sameValueMainDiagonal().orWinner(sameValueInverseDiagonal());
 	}
 	
+	public Winner getWinner(){
+		if(winner != winner.NONE) return winner;
+		calculateWinner();
+		return winner;
+	}
 }
