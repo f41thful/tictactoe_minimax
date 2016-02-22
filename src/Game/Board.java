@@ -9,11 +9,15 @@ public class Board {
 		NONE, TIE, NOTCH, CROSS;
 	}
 	
-	class ValueWinner{
+	public class ValueWinner{
 		public boolean value;
 		public Winner winner;
 		
-		public ValueWinner orWinner(ValueWinner vsP){
+		public ValueWinner(){
+			winner = Winner.TIE;
+		}
+
+		public ValueWinner orWinnerD(ValueWinner vsP){
 			ValueWinner vs = new ValueWinner();
 			vs.value = value || vsP.value;
 			if(value) vs.winner = winner;
@@ -50,6 +54,7 @@ public class Board {
 		board[i][j] = state;
 	}
 	
+	
 	public SquareState get(int i, int j){
 		return board[i][j];
 	}
@@ -75,64 +80,83 @@ public class Board {
 		}
 		return v;
 	}
-	private Winner calculateWinner(){
-		ValueWinner vs = 
-						  existsSameValueRow()
-				.orWinner( existsSameValueCol() )
-				.orWinner( sameValueDiagonal() );
-		if(vs.value || numberOf(SquareState.EMPTY) == 0) winner = vs.winner;
-		else winner = Winner.NONE;
-
-		return winner;
-	}
-	
-	private ValueWinner sameValueRow(int row){
-		ValueWinner vs = new ValueWinner();
-		vs.valueOf(board[row][0]);
-		vs.value = board[row][0] == board[row][1];
-		vs.value =  vs.value && (board[row][0] == board[row][2]);
-		return vs;
-	}
-	
-	private ValueWinner existsSameValueRow(){
-		return sameValueRow(0).orWinner(sameValueRow(1)).orWinner(sameValueRow(2));
-	}
-	
-	private ValueWinner sameValueCol(int col){
-		ValueWinner vs = new ValueWinner();
-		vs.valueOf(board[0][col]);
-		vs.value = board[0][col] == board[1][col];
-		vs.value = vs.value && (board[0][col] == board[2][col]);
-		return vs;
-	}
-	
-	private ValueWinner existsSameValueCol(){
-		return sameValueCol(0).orWinner(sameValueCol(1)).orWinner(sameValueCol(2));
-	}
-	
-	private ValueWinner sameValueMainDiagonal(){
-		ValueWinner vs = new ValueWinner();
-		vs.valueOf(board[0][0]);
-		vs.value = board[0][0] == board[1][1];
-		vs.value = vs.value && (board[0][0] == board[2][2]);
-		return vs;
-	}
-	
-	private ValueWinner sameValueInverseDiagonal(){
-		ValueWinner vs = new ValueWinner();
-		vs.valueOf(board[0][2]);
-		vs.value = board[0][2] == board[1][1];
-		vs.value = vs.value && (board[0][2] == board[2][0]);
-		return vs;
-	}
-	
-	private ValueWinner sameValueDiagonal(){
-		return sameValueMainDiagonal().orWinner(sameValueInverseDiagonal());
-	}
 	
 	public Winner getWinner(){
 		if(winner != winner.NONE) return winner;
 		calculateWinner();
 		return winner;
 	}
+	
+	private Winner calculateWinner(){
+		ValueWinner vs = 
+						  existsSameNonEmptyValueRow()
+				.orWinnerD( existsSameNonEmptyValueCol() )
+				.orWinnerD( sameNonEmptyValueDiagonal() );
+		if(vs.value || numberOf(SquareState.EMPTY) == 0) winner = vs.winner;
+		else winner = Winner.NONE;
+
+		return winner;
+	}
+	
+	private ValueWinner sameNonEmptyValueRow(int row){
+		ValueWinner vs = new ValueWinner();
+		if(board[row][0] == SquareState.EMPTY){
+			vs.value = false;
+			return vs;
+		}
+		vs.valueOf(board[row][0]);
+		vs.value = board[row][0] == board[row][1];
+		vs.value =  vs.value && (board[row][0] == board[row][2]);
+		return vs;
+	}
+	
+	private ValueWinner existsSameNonEmptyValueRow(){
+		return sameNonEmptyValueRow(0).orWinnerD(sameNonEmptyValueRow(1)).orWinnerD(sameNonEmptyValueRow(2));
+	}
+	
+	private ValueWinner sameNonEmptyValueCol(int col){
+		ValueWinner vs = new ValueWinner();
+		if(board[0][col] == SquareState.EMPTY){
+			vs.value = false;
+			return vs;
+		}
+		vs.valueOf(board[0][col]);
+		vs.value = board[0][col] == board[1][col];
+		vs.value = vs.value && (board[0][col] == board[2][col]);
+		return vs;
+	}
+	
+	private ValueWinner existsSameNonEmptyValueCol(){
+		return sameNonEmptyValueCol(0).orWinnerD(sameNonEmptyValueCol(1)).orWinnerD(sameNonEmptyValueCol(2));
+	}
+	
+	private ValueWinner sameNonEmptyValueMainDiagonal(){
+		ValueWinner vs = new ValueWinner();
+		if(board[0][0] == SquareState.EMPTY){
+			vs.value = false;
+			return vs;
+		}
+		vs.valueOf(board[0][0]);
+		vs.value = board[0][0] == board[1][1];
+		vs.value = vs.value && (board[0][0] == board[2][2]);
+		return vs;
+	}
+	
+	private ValueWinner sameNonEmptyValueInverseDiagonal(){
+		ValueWinner vs = new ValueWinner();
+		if(board[0][2] == SquareState.EMPTY){
+			vs.value = false;
+			return vs;
+		}
+		vs.valueOf(board[0][2]);
+		vs.value = board[0][2] == board[1][1];
+		vs.value = vs.value && (board[0][2] == board[2][0]);
+		return vs;
+	}
+	
+	private ValueWinner sameNonEmptyValueDiagonal(){
+		return sameNonEmptyValueMainDiagonal().orWinnerD(sameNonEmptyValueInverseDiagonal());
+	}
+	
+	
 }

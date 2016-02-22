@@ -1,19 +1,23 @@
 package Launcher;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
 import Game.Board;
 import Game.Board.SquareState;
+import Tests.BoardTest;
 
 public class TestLauncher {
-	public static void main(String[] args) {
-		testWinnerRow();
+
+	public static void testWinnerRow(){
+		
 	}
 	
-	public static void testWinnerRow(){
-		Board b = new Board();
-		b.set( 0, 0, SquareState.CROSS );
-		b.set( 0, 1, SquareState.CROSS );
-		b.set( 0, 2, SquareState.CROSS );
-		System.out.println(b);
-		System.out.println("Winner: " + b.getWinner());
+	public static void main(String[] args) {
+	    Result result = JUnitCore.runClasses(BoardTest.class);
+	    for (Failure failure : result.getFailures()) {
+	      System.out.println(failure.toString());
+	    }
 	}
 }
