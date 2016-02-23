@@ -1,12 +1,40 @@
 package Game;
 
-public class Board {
+import java.util.Observable;
+
+public class Board extends Observable{
 	public enum SquareState{
 		EMPTY, NOTCH, CROSS;
+		
+		public SquareState alternate(){
+			if(this == NOTCH) return CROSS;
+			if(this == CROSS) return NOTCH;
+			return EMPTY;
+		}
 	}
 	
 	public enum Winner{
 		NONE, TIE, NOTCH, CROSS;
+	}
+	
+	public static enum MessageType{
+		WINNER, SET
+	}
+	public static class Message{
+		public MessageType type;
+		public Object value;
+		public int row, col;
+		
+		public Message(MessageType type, Object value, int row, int col){
+			this.type = type;
+			this.value = value;
+			this.row = row;
+			this.col = col;
+		}
+		
+		public String toString(){
+			return "[Type: " + type  + ", Value: " + value + "]";
+		}
 	}
 	
 	public class ValueWinner{
@@ -32,6 +60,7 @@ public class Board {
 		}
 	}
 	
+	
 	Winner winner;
 	
 	SquareState[][] board;
@@ -52,6 +81,9 @@ public class Board {
 	
 	public void set(int i, int j, SquareState state){
 		board[i][j] = state;
+		setChanged();
+		notifyObservers(new Message(MessageType.SET, state, i, j));
+		calculateWinner();
 	}
 	
 	
@@ -81,6 +113,7 @@ public class Board {
 		return v;
 	}
 	
+	
 	public Winner getWinner(){
 		if(winner != winner.NONE) return winner;
 		calculateWinner();
@@ -92,8 +125,8 @@ public class Board {
 						  existsSameNonEmptyValueRow()
 				.orWinnerD( existsSameNonEmptyValueCol() )
 				.orWinnerD( sameNonEmptyValueDiagonal() );
-		if(vs.value || numberOf(SquareState.EMPTY) == 0) winner = vs.winner;
-		else winner = Winner.NONE;
+		if(vs.value || numberOf(SquareState.EMPTY) == 0) setWinner(vs.winner);
+		else setWinner(Winner.NONE);
 
 		return winner;
 	}
@@ -159,4 +192,9 @@ public class Board {
 	}
 	
 	
+	private void setWinner(Winner winner){
+		this.winner = winner;
+		setChanged();
+		notifyObservers( new Message(MessageType.WINNER, winner, 0, 0) );
+	}
 }
