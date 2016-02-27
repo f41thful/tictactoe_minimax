@@ -5,12 +5,12 @@ import java.util.LinkedList;
 
 public class F {
 	public static <T, U> Collection<U> map(Collection<T> c, Function<T, U> f){
-		Collection<U> res = new LinkedList<U>();
-		if(c == null) return res;
+		Collection<U> out = new LinkedList<U>();
+		if(c == null) return out;
 		for(T val : c){
-			res.add( f.apply( val ) );
+			out.add( f.apply( val ) );
 		}
-		return res;
+		return out;
 	}
 	
 	public static <T> T reduce(Collection<T> c, Function<T, T> f){
@@ -23,4 +23,6 @@ public class F {
 		}
 		return elem;
 	}
+	
+
 }

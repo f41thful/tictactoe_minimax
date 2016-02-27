@@ -1,6 +1,7 @@
 package lib.tree;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +71,11 @@ public class Tree<T> {
 		return new PostOrderIteratorTree<T>(this);
 	}
 	
+	public VisitIterator<T> getVisitPostOrderIteratorTree(ITreeVisitor<T> visitor){
+		PostOrderIteratorTree<T> it = getPostOrderIteratorTree();
+		return new VisitIterator<T>( this, visitor, it );
+	}
+	
 	
 	
 	public boolean isLeaf(){
@@ -124,5 +130,9 @@ public class Tree<T> {
 	
 	public Object getData(String key){
 		return map.get( key );
+	}
+	
+	public Collection<Tree<T>> getChildren(){
+		return c;
 	}
 }

@@ -22,6 +22,10 @@ public class VisitIterator<T> extends TreeIterator<Tree<T>>{
 		else visitor.visitInternalNode( elem );
 		return elem;
 	}
+	
+	public void applyVisitor(){
+		while(hasNext()) next();
+	}
 
 	@Override
 	public void remove() {
