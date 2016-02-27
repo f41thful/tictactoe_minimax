@@ -9,22 +9,21 @@ public class Minimax<T> {
 		public int evaluate(T value);
 	}
 	
-	static class Evaluation implements ITreeVisitor{
+	class Evaluation implements ITreeVisitor<T>{
+		String key = "key";
+		@Override
+		public void visitLeaf(Tree<T> leaf) {
+			leaf.putdata( key, st.evaluate( leaf.getElem() ));
+		}
 
 		@Override
-		public void visitLeaf(Tree leaf) {
-			// TODO Auto-generated method stub
+		public void visitInternalNode(Tree<T> internalNode) {
+			int depth = internalNode.getDepth();
 			
 		}
 
 		@Override
-		public void visitInternalNode(Tree internalNode) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void visitNode(Tree node) {
+		public void visitNode(Tree<T> node) {
 			// TODO Auto-generated method stub
 		}
 		
