@@ -1,9 +1,11 @@
-package lib;
+package lib.tree;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import lib.IGenerator;
 
 public class Tree<T> {
 	

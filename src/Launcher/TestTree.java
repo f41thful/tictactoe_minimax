@@ -2,8 +2,8 @@ package Launcher;
 
 import java.util.NoSuchElementException;
 
-import lib.Tree;
-import lib.Tree.PreOrderIteratorTree;
+import lib.tree.Tree;
+import lib.tree.Tree.PreOrderIteratorTree;
 
 import Tests.GenerationFunction;
 
