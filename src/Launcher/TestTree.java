@@ -3,7 +3,7 @@ package Launcher;
 import java.util.NoSuchElementException;
 
 import lib.Tree;
-import lib.Tree.PreOrderIterator;
+import lib.Tree.PreOrderIteratorTree;
 
 import Tests.GenerationFunction;
 
@@ -31,17 +31,17 @@ public class TestTree {
 	
 	public static void testTreePostOrder(){
 		Tree<Integer> t0 = getTestTree();
-		System.out.println(t0.toPostOrderString());
+		//System.out.println(t0.toPostOrderString());
 	}
 	
 	public static void testTreePreOrder(){
 		Tree<Integer> t0 = getTestTree();
-		System.out.println(t0.toPreOrderString());
+		//System.out.println(t0.toPreOrderString());
 	}
 	
 	public static void testTreeGeneration(){
 		Tree<Integer> tree = Tree.generateTree( 0, new GenerationFunction(), 1, 0 );
-		System.out.println(tree.toPreOrderString());
+		//System.out.println(tree.toPreOrderString());
 	}
 	public static void main(String[] args) {
 		testTreePostOrder();

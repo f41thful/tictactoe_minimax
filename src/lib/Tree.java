@@ -7,11 +7,46 @@ import java.util.NoSuchElementException;
 
 public class Tree<T> {
 	
-	public class PreOrderIterator implements Iterator<T>{
+	public interface TreeVisitor<T>{
+		public void visitLeaf(Tree<T> leaf);
+		public void visitInternalNode(Tree<T> internalNode);
+		public void visitNode(Tree<T> node);
+	}
+	
+	public interface TreeIterator<T> extends Iterator<T>{}
+	public class VisitIterator implements TreeIterator<Tree<T>>{
+		TreeVisitor<T> visitor;
+		TreeIterator<Tree<T>> it;
+
+		public VisitIterator(TreeVisitor<T> visitor, TreeIterator<Tree<T>> it){
+			this.visitor = visitor;
+			this.it = it;
+		}
+		@Override
+		public boolean hasNext() {
+			return it.hasNext();
+		}
+
+		@Override
+		public Tree<T> next() {
+			Tree<T> elem = it.next();
+			visitor.visitNode( elem );
+			if(elem.isLeaf()) visitor.visitLeaf( elem );
+			else visitor.visitInternalNode( elem );
+			return elem;
+		}
+
+		@Override
+		public void remove() {
+		}
+		
+	}
+	
+	public class PreOrderIteratorTree implements TreeIterator<Tree<T>>{
 
 		boolean nodeValueVisited = false;
 		int cVisited = 0;
-		PreOrderIterator currentIt;
+		PreOrderIteratorTree currentIt;
 		boolean getNewIterator = true;
 		@Override
 		public boolean hasNext() {
@@ -19,17 +54,17 @@ public class Tree<T> {
 		}
 
 		@Override
-		public T next() {
+		public Tree<T> next() {
 			if(!hasNext()) throw new NoSuchElementException();
 			if(!nodeValueVisited){
 				nodeValueVisited = true;
-				return e;
+				return Tree.this;
 			}else{
 				if(getNewIterator){
-					currentIt = c.get(cVisited).getPreOrderIterator();
+					currentIt = c.get(cVisited).getPreOrderIteratorTree();
 					getNewIterator = false;
 				}
-				T cElem = currentIt.next();
+				Tree<T> cElem = currentIt.next();
 				if(!currentIt.hasNext()){
 					cVisited++;
 					getNewIterator = true;
@@ -45,8 +80,8 @@ public class Tree<T> {
 		}
 	}
 
-	public class PostOrderIterator implements Iterator<T>{
-		PostOrderIterator currentIt = null;
+	public class PostOrderIteratorTree implements TreeIterator<Tree<T>>{
+		PostOrderIteratorTree currentIt = null;
 		int currentChildrenIndex = 0;
 		boolean nodeValueVisited = false;
 		
@@ -56,23 +91,23 @@ public class Tree<T> {
 		}
 
 		@Override
-		public T next() {
+		public Tree<T> next() {
 			if(!hasNext()) throw new NoSuchElementException();
 			
 			if(currentIt == null && currentChildrenIndex < c.size()) 
 			{
-				currentIt = c.get(currentChildrenIndex).getPostOrderIterator();
+				currentIt = c.get(currentChildrenIndex).getPostOrderIteratorTree();
 			}
 			else if((currentIt != null && !currentIt.hasNext())){
 				currentChildrenIndex++;
 				if(currentChildrenIndex < c.size()){
-					currentIt = c.get(currentChildrenIndex).getPostOrderIterator();
+					currentIt = c.get(currentChildrenIndex).getPostOrderIteratorTree();
 				}
 			}
 			
 			if(currentIt == null || !currentIt.hasNext()){
 				nodeValueVisited = true;
-				return e;
+				return Tree.this;
 			}else{
 				return currentIt.next();
 			}
@@ -135,23 +170,27 @@ public class Tree<T> {
 		return c.iterator();
 	}
 	
-	public PreOrderIterator getPreOrderIterator(){
-		return new PreOrderIterator();
+	
+	public PreOrderIteratorTree getPreOrderIteratorTree(){
+		return new PreOrderIteratorTree();
 	}
 	
-	public PostOrderIterator getPostOrderIterator(){
-		return new PostOrderIterator();
+	public PostOrderIteratorTree getPostOrderIteratorTree(){
+		return new PostOrderIteratorTree();
 	}
 	
-	public String toPreOrderString(){
-		PreOrderIterator it = getPreOrderIterator();
-		String s = "";
-		while(it.hasNext()){
-			s = s + it.next() + " ";
-		}
-		return s;
+	
+	
+	public boolean isLeaf(){
+		return c.size() == 0;
 	}
 	
+	public boolean isInternalNode(){
+		return !isLeaf();
+	}
+	
+	//TODO
+	/*
 	public String toPostOrderString(){
 		PostOrderIterator it = getPostOrderIterator();
 		String s = "";
@@ -161,5 +200,16 @@ public class Tree<T> {
 		
 		return s;
 	}
+
+	
+	public String toPreOrderString(){
+		PreOrderIterator it = getPreOrderIterator();
+		String s = "";
+		while(it.hasNext()){
+			s = s + it.next() + " ";
+		}
+		return s;
+	}
+	*/
 	
 }
