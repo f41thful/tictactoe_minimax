@@ -143,10 +143,11 @@ public class BoardGUI implements Observer{
 			JButton b = buttons[m.row][m.col];
 			if(m.value == SquareState.CROSS) b.setIcon( icons.getCross() );
 			else if(m.value == SquareState.NOTCH) b.setIcon( icons.getNotch() );
-			b.enable( false );
+			b.setEnabled(false);
 		}else if(m.type == MessageType.WINNER && m.value != Winner.NONE){
 			winnerName.setText(((Winner)m.value).toString());
 			winnerPanel.setVisible(true);
+			frame.pack();
 		}
 	}
 }
