@@ -27,7 +27,7 @@ public class TestTree {
 	}
 	
 	public static void testTreeGeneration(){
-		Tree<Integer> tree = Tree.generateTree( 0, new GenerationFunction() );
+		Tree<Integer> tree = Tree.generateTree( 0, new GenerationFunction(), 1, 0 );
 		System.out.println(tree.toPreOrderString());
 	}
 	public static void main(String[] args) {

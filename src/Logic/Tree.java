@@ -51,11 +51,23 @@ public class Tree<T> {
 	T e;
 	ArrayList<Tree<T>> c;
 	
-	public static <E> Tree<E> generateTree(E elem, Generator<E> g){
+	// generate a tree with nodes of depth depth included.
+	// a call will breadth == 0 will generate a tree with one node.
+	public static <E> Tree<E> generateTree(E elem, Generator<E> g, int depth, int breadth){
+		return generateTreeImp( elem, g, 0, depth, breadth );
+	}
+	
+	private static <E> Tree<E> generateTreeImp
+	(E elem, Generator<E> g, int curDepth, int maxDepth, int maxBreadth){
+		if(curDepth > maxDepth) return null;
 		Tree<E> tree = new Tree<E>(elem);
 		List<E> children = g.generate( elem );
-		for(E child : children){
-			tree.addChild(generateTree(child, g));
+	
+		for(int i = 0; i < maxBreadth && i < children.size(); i++){
+			E child = children.get( i );
+			Tree<E> childTree = generateTreeImp(child, g, curDepth + 1, maxDepth, maxBreadth);
+			if(childTree != null)
+				tree.addChild(childTree);
 		}
 		return tree;
 	}
