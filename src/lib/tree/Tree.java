@@ -8,121 +8,6 @@ import java.util.NoSuchElementException;
 import lib.IGenerator;
 
 public class Tree<T> {
-	
-	public interface TreeVisitor<T>{
-		public void visitLeaf(Tree<T> leaf);
-		public void visitInternalNode(Tree<T> internalNode);
-		public void visitNode(Tree<T> node);
-	}
-	
-	public interface TreeIterator<T> extends Iterator<T>{}
-	public class VisitIterator implements TreeIterator<Tree<T>>{
-		TreeVisitor<T> visitor;
-		TreeIterator<Tree<T>> it;
-
-		public VisitIterator(TreeVisitor<T> visitor, TreeIterator<Tree<T>> it){
-			this.visitor = visitor;
-			this.it = it;
-		}
-		@Override
-		public boolean hasNext() {
-			return it.hasNext();
-		}
-
-		@Override
-		public Tree<T> next() {
-			Tree<T> elem = it.next();
-			visitor.visitNode( elem );
-			if(elem.isLeaf()) visitor.visitLeaf( elem );
-			else visitor.visitInternalNode( elem );
-			return elem;
-		}
-
-		@Override
-		public void remove() {
-		}
-		
-	}
-	
-	public class PreOrderIteratorTree implements TreeIterator<Tree<T>>{
-
-		boolean nodeValueVisited = false;
-		int cVisited = 0;
-		PreOrderIteratorTree currentIt;
-		boolean getNewIterator = true;
-		@Override
-		public boolean hasNext() {
-			return !nodeValueVisited || cVisited < c.size();
-		}
-
-		@Override
-		public Tree<T> next() {
-			if(!hasNext()) throw new NoSuchElementException();
-			if(!nodeValueVisited){
-				nodeValueVisited = true;
-				return Tree.this;
-			}else{
-				if(getNewIterator){
-					currentIt = c.get(cVisited).getPreOrderIteratorTree();
-					getNewIterator = false;
-				}
-				Tree<T> cElem = currentIt.next();
-				if(!currentIt.hasNext()){
-					cVisited++;
-					getNewIterator = true;
-				}
-				return cElem;
-			}
-		}
-
-		@Override
-		public void remove() {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-
-	public class PostOrderIteratorTree implements TreeIterator<Tree<T>>{
-		PostOrderIteratorTree currentIt = null;
-		int currentChildrenIndex = 0;
-		boolean nodeValueVisited = false;
-		
-		@Override
-		public boolean hasNext() {
-			return !nodeValueVisited || currentChildrenIndex < c.size();
-		}
-
-		@Override
-		public Tree<T> next() {
-			if(!hasNext()) throw new NoSuchElementException();
-			
-			if(currentIt == null && currentChildrenIndex < c.size()) 
-			{
-				currentIt = c.get(currentChildrenIndex).getPostOrderIteratorTree();
-			}
-			else if((currentIt != null && !currentIt.hasNext())){
-				currentChildrenIndex++;
-				if(currentChildrenIndex < c.size()){
-					currentIt = c.get(currentChildrenIndex).getPostOrderIteratorTree();
-				}
-			}
-			
-			if(currentIt == null || !currentIt.hasNext()){
-				nodeValueVisited = true;
-				return Tree.this;
-			}else{
-				return currentIt.next();
-			}
-		}
-
-		@Override
-		public void remove() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
-	}
 
 	Tree<T> p;
 	T e;
@@ -174,11 +59,11 @@ public class Tree<T> {
 	
 	
 	public PreOrderIteratorTree getPreOrderIteratorTree(){
-		return new PreOrderIteratorTree();
+		return new PreOrderIteratorTree(this);
 	}
 	
 	public PostOrderIteratorTree getPostOrderIteratorTree(){
-		return new PostOrderIteratorTree();
+		return new PostOrderIteratorTree(this);
 	}
 	
 	
