@@ -103,4 +103,14 @@ public class Tree<T> {
 		return s;
 	}
 	
+	public int getDepth(){
+		int depth = 0;
+		Tree<T> cur = p;
+		while(cur != null){
+			cur = cur.p;
+			depth++;
+		}
+		return depth;
+	}
+	
 }
