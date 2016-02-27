@@ -1,17 +1,20 @@
 package lib.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import lib.IGenerator;
 
 public class Tree<T> {
 
-	Tree<T> p;
-	T e;
-	ArrayList<Tree<T>> c;
+	protected Tree<T> p;
+	protected T e;
+	protected ArrayList<Tree<T>> c;
+	protected Map<String, Object> map;	
 	
 	// generate a tree with nodes of depth depth included.
 	// a call will breadth == 0 will generate a tree with one node.
@@ -37,6 +40,7 @@ public class Tree<T> {
 	public Tree(T elem){
 		e = elem;
 		c = new ArrayList<Tree<T>>();
+		map = new HashMap<String, Object>();
 	}
 	
 	public void addChild(T elem){
@@ -113,4 +117,12 @@ public class Tree<T> {
 		return depth;
 	}
 	
+	public void putdata(String key, Object data){
+		map.put( key, data );
+	}
+	
+	
+	public Object getData(String key){
+		return map.get( key );
+	}
 }

@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 public class PostOrderIteratorTree<T> extends TreeIterator<Tree<T>>{
 	
 
-	PostOrderIteratorTree currentIt = null;
+	PostOrderIteratorTree<T> currentIt = null;
 	int currentChildrenIndex = 0;
 	boolean nodeValueVisited = false;
 	
