@@ -7,23 +7,22 @@ import java.util.NoSuchElementException;
 
 public class Tree<T> {
 	
-	
 	public class PreOrderIterator implements Iterator<T>{
 
-		boolean elemVisited = false;
+		boolean nodeValueVisited = false;
 		int cVisited = 0;
 		PreOrderIterator currentIt;
 		boolean getNewIterator = true;
 		@Override
 		public boolean hasNext() {
-			return !elemVisited || cVisited < c.size();
+			return !nodeValueVisited || cVisited < c.size();
 		}
 
 		@Override
 		public T next() {
 			if(!hasNext()) throw new NoSuchElementException();
-			if(!elemVisited){
-				elemVisited = true;
+			if(!nodeValueVisited){
+				nodeValueVisited = true;
 				return e;
 			}else{
 				if(getNewIterator){
@@ -38,10 +37,53 @@ public class Tree<T> {
 				return cElem;
 			}
 		}
-		
 
 		@Override
-		public void remove() {}
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+
+	public class PostOrderIterator implements Iterator<T>{
+		PostOrderIterator currentIt = null;
+		int currentChildrenIndex = 0;
+		boolean nodeValueVisited = false;
+		
+		@Override
+		public boolean hasNext() {
+			return !nodeValueVisited || currentChildrenIndex < c.size();
+		}
+
+		@Override
+		public T next() {
+			if(!hasNext()) throw new NoSuchElementException();
+			
+			if(currentIt == null && currentChildrenIndex < c.size()) 
+			{
+				currentIt = c.get(currentChildrenIndex).getPostOrderIterator();
+			}
+			else if((currentIt != null && !currentIt.hasNext())){
+				currentChildrenIndex++;
+				if(currentChildrenIndex < c.size()){
+					currentIt = c.get(currentChildrenIndex).getPostOrderIterator();
+				}
+			}
+			
+			if(currentIt == null || !currentIt.hasNext()){
+				nodeValueVisited = true;
+				return e;
+			}else{
+				return currentIt.next();
+			}
+		}
+
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+		
 		
 	}
 
@@ -97,6 +139,10 @@ public class Tree<T> {
 		return new PreOrderIterator();
 	}
 	
+	public PostOrderIterator getPostOrderIterator(){
+		return new PostOrderIterator();
+	}
+	
 	public String toPreOrderString(){
 		PreOrderIterator it = getPreOrderIterator();
 		String s = "";
@@ -105,4 +151,15 @@ public class Tree<T> {
 		}
 		return s;
 	}
+	
+	public String toPostOrderString(){
+		PostOrderIterator it = getPostOrderIterator();
+		String s = "";
+		while(it.hasNext()){
+			s = s + it.next() + " ";
+		}
+		
+		return s;
+	}
+	
 }

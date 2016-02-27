@@ -8,15 +8,17 @@ import lib.Tree.PreOrderIterator;
 import Tests.GenerationFunction;
 
 public class TestTree {
-	public static void testTreePreorder(){
+	
+	
+	public static Tree<Integer> getTestTree(){
 		Tree<Integer> t0 = new Tree<Integer>(0);
-		Tree<Integer> tc0i0 = new Tree<Integer>(00);
-		Tree<Integer> tc0i1 = new Tree<Integer>(01);
-		Tree<Integer> tc0i2 = new Tree<Integer>(02);
-		Tree<Integer> tc0i0i0 = new Tree<Integer>(000);
-		Tree<Integer> tc0i0i1 = new Tree<Integer>(001);
-		Tree<Integer> tc0i2i0 = new Tree<Integer>(020);
-		Tree<Integer> tc0i2i1 = new Tree<Integer>(021);
+		Tree<Integer> tc0i0 = new Tree<Integer>(1);
+		Tree<Integer> tc0i0i0 = new Tree<Integer>(2);
+		Tree<Integer> tc0i0i1 = new Tree<Integer>(3);
+		Tree<Integer> tc0i1 = new Tree<Integer>(4);
+		Tree<Integer> tc0i2 = new Tree<Integer>(5);
+		Tree<Integer> tc0i2i0 = new Tree<Integer>(6);
+		Tree<Integer> tc0i2i1 = new Tree<Integer>(7);
 		t0.addChild( tc0i0 );
 		t0.addChild( tc0i1 );
 		t0.addChild( tc0i2 );
@@ -24,6 +26,16 @@ public class TestTree {
 		tc0i0.addChild(tc0i0i1);
 		tc0i2.addChild(tc0i2i0);
 		tc0i2.addChild(tc0i2i1);
+		return t0;
+	}
+	
+	public static void testTreePostOrder(){
+		Tree<Integer> t0 = getTestTree();
+		System.out.println(t0.toPostOrderString());
+	}
+	
+	public static void testTreePreOrder(){
+		Tree<Integer> t0 = getTestTree();
 		System.out.println(t0.toPreOrderString());
 	}
 	
@@ -32,6 +44,8 @@ public class TestTree {
 		System.out.println(tree.toPreOrderString());
 	}
 	public static void main(String[] args) {
-		testTreeGeneration();
+		testTreePostOrder();
+		//testTreePreorder();
+		//testTreeGeneration();
 	}
 }
