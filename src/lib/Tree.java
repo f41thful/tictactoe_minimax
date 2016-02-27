@@ -1,4 +1,4 @@
-package Logic;
+package lib;
 
 import java.util.ArrayList;
 import java.util.Iterator;

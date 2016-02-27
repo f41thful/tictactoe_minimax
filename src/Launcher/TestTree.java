@@ -2,8 +2,9 @@ package Launcher;
 
 import java.util.NoSuchElementException;
 
-import Logic.Tree;
-import Logic.Tree.PreOrderIterator;
+import lib.Tree;
+import lib.Tree.PreOrderIterator;
+
 import Tests.GenerationFunction;
 
 public class TestTree {
