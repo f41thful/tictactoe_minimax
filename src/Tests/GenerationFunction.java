@@ -3,10 +3,10 @@ package Tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import lib.Tree.Generator;
+import lib.IGenerator;
 
 
-public class GenerationFunction implements Generator<Integer>{
+public class GenerationFunction implements IGenerator<Integer>{
 
 	@Override
 	public List<Integer> generate(Integer elem) {

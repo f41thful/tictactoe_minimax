@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Tree<T> {
-	public interface Generator<T>{
-		public List<T> generate(T elem);
-	}
+	
 	
 	public class PreOrderIterator implements Iterator<T>{
 
@@ -53,12 +51,12 @@ public class Tree<T> {
 	
 	// generate a tree with nodes of depth depth included.
 	// a call will breadth == 0 will generate a tree with one node.
-	public static <E> Tree<E> generateTree(E elem, Generator<E> g, int depth, int breadth){
+	public static <E> Tree<E> generateTree(E elem, IGenerator<E> g, int depth, int breadth){
 		return generateTreeImp( elem, g, 0, depth, breadth );
 	}
 	
 	private static <E> Tree<E> generateTreeImp
-	(E elem, Generator<E> g, int curDepth, int maxDepth, int maxBreadth){
+	(E elem, IGenerator<E> g, int curDepth, int maxDepth, int maxBreadth){
 		if(curDepth > maxDepth) return null;
 		Tree<E> tree = new Tree<E>(elem);
 		List<E> children = g.generate( elem );
