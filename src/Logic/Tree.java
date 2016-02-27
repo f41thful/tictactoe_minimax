@@ -51,8 +51,13 @@ public class Tree<T> {
 	T e;
 	ArrayList<Tree<T>> c;
 	
-	public static <E> Tree generateTree(E elem, Generator<E> g){
-		return null;
+	public static <E> Tree<E> generateTree(E elem, Generator<E> g){
+		Tree<E> tree = new Tree<E>(elem);
+		List<E> children = g.generate( elem );
+		for(E child : children){
+			tree.addChild(generateTree(child, g));
+		}
+		return tree;
 	}
 	
 	public Tree(T elem){
@@ -80,5 +85,14 @@ public class Tree<T> {
 	
 	public PreOrderIterator getPreOrderIterator(){
 		return new PreOrderIterator();
+	}
+	
+	public String toPreOrderString(){
+		PreOrderIterator it = getPreOrderIterator();
+		String s = "";
+		while(it.hasNext()){
+			s = s + it.next() + " ";
+		}
+		return s;
 	}
 }

@@ -4,17 +4,18 @@ import java.util.NoSuchElementException;
 
 import Logic.Tree;
 import Logic.Tree.PreOrderIterator;
+import Tests.GenerationFunction;
 
 public class TestTree {
-	public static void main(String[] args) {
+	public static void testTreePreorder(){
 		Tree<Integer> t0 = new Tree<Integer>(0);
-		Tree<Integer> tc0i0 = new Tree<Integer>(10);
-		Tree<Integer> tc0i1 = new Tree<Integer>(11);
-		Tree<Integer> tc0i2 = new Tree<Integer>(12);
-		Tree<Integer> tc0i0i0 = new Tree<Integer>(20);
-		Tree<Integer> tc0i0i1 = new Tree<Integer>(20);
-		Tree<Integer> tc0i2i0 = new Tree<Integer>(20);
-		Tree<Integer> tc0i2i1 = new Tree<Integer>(20);
+		Tree<Integer> tc0i0 = new Tree<Integer>(00);
+		Tree<Integer> tc0i1 = new Tree<Integer>(01);
+		Tree<Integer> tc0i2 = new Tree<Integer>(02);
+		Tree<Integer> tc0i0i0 = new Tree<Integer>(000);
+		Tree<Integer> tc0i0i1 = new Tree<Integer>(001);
+		Tree<Integer> tc0i2i0 = new Tree<Integer>(020);
+		Tree<Integer> tc0i2i1 = new Tree<Integer>(021);
 		t0.addChild( tc0i0 );
 		t0.addChild( tc0i1 );
 		t0.addChild( tc0i2 );
@@ -22,10 +23,14 @@ public class TestTree {
 		tc0i0.addChild(tc0i0i1);
 		tc0i2.addChild(tc0i2i0);
 		tc0i2.addChild(tc0i2i1);
-		PreOrderIterator i = t0.getPreOrderIterator();
-		while(i.hasNext()){
-			System.out.println(i.next() + " ");
-		}
-		
+		System.out.println(t0.toPreOrderString());
+	}
+	
+	public static void testTreeGeneration(){
+		Tree<Integer> tree = Tree.generateTree( 0, new GenerationFunction() );
+		System.out.println(tree.toPreOrderString());
+	}
+	public static void main(String[] args) {
+		testTreeGeneration();
 	}
 }
