@@ -58,12 +58,12 @@ public class Tree<T> {
 	}
 	
 	
-	public PreOrderIteratorTree getPreOrderIteratorTree(){
-		return new PreOrderIteratorTree(this);
+	public PreOrderIteratorTree<T> getPreOrderIteratorTree(){
+		return new PreOrderIteratorTree<T>(this);
 	}
 	
-	public PostOrderIteratorTree getPostOrderIteratorTree(){
-		return new PostOrderIteratorTree(this);
+	public PostOrderIteratorTree<T> getPostOrderIteratorTree(){
+		return new PostOrderIteratorTree<T>(this);
 	}
 	
 	
@@ -76,10 +76,14 @@ public class Tree<T> {
 		return !isLeaf();
 	}
 	
-	//TODO
-	/*
+	public T getElem(){
+		return e;
+	}
+	
+	
 	public String toPostOrderString(){
-		PostOrderIterator it = getPostOrderIterator();
+		PostOrderIteratorTree<T> treeIt = getPostOrderIteratorTree();
+		OrderIterator<T> it = new OrderIterator<T>(this, treeIt);
 		String s = "";
 		while(it.hasNext()){
 			s = s + it.next() + " ";
@@ -90,13 +94,13 @@ public class Tree<T> {
 
 	
 	public String toPreOrderString(){
-		PreOrderIterator it = getPreOrderIterator();
+		PreOrderIteratorTree<T> treeIt = getPreOrderIteratorTree();
+		OrderIterator<T> it = new OrderIterator<T>(this, treeIt);
 		String s = "";
 		while(it.hasNext()){
 			s = s + it.next() + " ";
 		}
 		return s;
 	}
-	*/
 	
 }
