@@ -14,6 +14,7 @@ import lib.tree.VisitIterator;
 
 import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
+import TreeGetters.GetValue;
 
 public class MinimaxTest {
 	
@@ -55,18 +56,6 @@ public class MinimaxTest {
 		
 	};
 	
-	public static class GetValue<T> implements GetString<T>{
-
-		@Override
-		public String get(Tree<T> elem) {
-			Object o = elem.getData( Minimax.KEY );
-			if(o != null){
-				return "Value: " + String.valueOf(o);
-			}
-			return "";
-		}
-		
-	}
 	
 	
 	public static void main(String[] args) {

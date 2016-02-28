@@ -82,13 +82,14 @@ public class Board extends Observable{
 	 * Create a board with the same board values as board and with the same 
 	 * winner value.
 	 */
-	public Board(Board board){
-		for(int i = 0; i < board.getNumRows(); i++){
-			for(int j = 0; j < board.getNumCols(); j++){
-				set( i, j, board.get( i, j ) );
+	public Board(Board boardObj){
+		board = new SquareState[bR][bC];
+		for(int i = 0; i < boardObj.getNumRows(); i++){
+			for(int j = 0; j < boardObj.getNumCols(); j++){
+				set( i, j, boardObj.get( i, j ) );
 			}
 		}
-		winner = board.winner;
+		winner = boardObj.winner;
 	}
 	
 	

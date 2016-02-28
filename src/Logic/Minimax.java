@@ -106,4 +106,23 @@ public class Minimax<T> {
 	public void setBreadth(int breadth){
 		this.breadth = breadth;
 	}
+	
+	/*
+	 * Take the first element that has the value that has been selected.
+	 */
+	public T getSol(Tree<T> tree){
+		Object o = tree.getData( KEY );
+		if(o == null) return null;
+		
+		Integer value = (Integer) o;
+		for(Tree<T> t : tree.getChildren()){
+			o = t.getData( KEY );
+
+			if(o == null) return null;
+			Integer valueC = (Integer) o;
+			
+			if(value == valueC) return t.getElem();
+		}
+		return null;
+	}
 }
