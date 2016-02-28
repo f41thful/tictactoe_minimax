@@ -78,6 +78,19 @@ public class Board extends Observable{
 		winner = Winner.NONE;
 	}
 	
+	/*
+	 * Create a board with the same board values as board and with the same 
+	 * winner value.
+	 */
+	public Board(Board board){
+		for(int i = 0; i < board.getNumRows(); i++){
+			for(int j = 0; j < board.getNumCols(); j++){
+				set( i, j, board.get( i, j ) );
+			}
+		}
+		winner = board.winner;
+	}
+	
 	
 	public void set(int i, int j, SquareState state){
 		board[i][j] = state;
@@ -89,6 +102,14 @@ public class Board extends Observable{
 	
 	public SquareState get(int i, int j){
 		return board[i][j];
+	}
+	
+	public int getNumRows(){
+		return bR;
+	}
+	
+	public int getNumCols(){
+		return bC;
 	}
 	
 	public int numberOf(SquareState s){
@@ -120,6 +141,10 @@ public class Board extends Observable{
 		return winner;
 	}
 	
+	
+	
+
+
 	private Winner calculateWinner(){
 		ValueWinner vs = 
 						  existsSameNonEmptyValueRow()
