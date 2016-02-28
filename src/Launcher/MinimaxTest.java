@@ -22,7 +22,7 @@ public class MinimaxTest {
 			for(int i = 0; i < out.length; i++) out[i] = 0;
 			for(int i = 0; i < in.length; i++){
 				if(in[i] != 0 && i + off >= 0 && i + off < out.length){
-					out[i+off] = in[i];
+					out[i+off] = in[i] + off;
 				}
 			}
 			return out;
@@ -57,7 +57,7 @@ public class MinimaxTest {
 		Integer[] array = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		Minimax<Integer[]> minimax = new Minimax<>( st, 2, Integer.MAX_VALUE );
 		Tree<Integer[]> tree = minimax.generate( array );
-		
+		System.out.println(tree.toPreOrderString());
 		VisitIterator<Integer[]> v = tree.getVisitPostOrderIteratorTree( new ITreeVisitor<Integer[]>() {
 
 			@Override
@@ -74,7 +74,7 @@ public class MinimaxTest {
 
 			@Override
 			public void visitNode(Tree<Integer[]> node) {
-				System.out.println("Depth: " + node.getDepth() + ", Value: " + node.getData( Minimax.KEY ));
+				System.out.println("Depth: " + node.getDepth() + " value: " + node.getData( Minimax.KEY ));
 			}
 		} );
 		v.applyVisitor();

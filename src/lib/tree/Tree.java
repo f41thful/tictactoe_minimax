@@ -1,6 +1,7 @@
 package lib.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -93,24 +94,13 @@ public class Tree<T> {
 	
 	public String toPostOrderString(){
 		PostOrderIteratorTree<T> treeIt = getPostOrderIteratorTree();
-		OrderIterator<T> it = new OrderIterator<T>(this, treeIt);
-		String s = "";
-		while(it.hasNext()){
-			s = s + it.next() + " ";
-		}
-		
-		return s;
+		return toOrderString( treeIt );
 	}
 
 	
 	public String toPreOrderString(){
 		PreOrderIteratorTree<T> treeIt = getPreOrderIteratorTree();
-		OrderIterator<T> it = new OrderIterator<T>(this, treeIt);
-		String s = "";
-		while(it.hasNext()){
-			s = s + it.next() + " ";
-		}
-		return s;
+		return toOrderString( treeIt );
 	}
 	
 	public int getDepth(){
@@ -135,4 +125,21 @@ public class Tree<T> {
 	public Collection<Tree<T>> getChildren(){
 		return c;
 	}
+	
+	
+	private String toOrderString(TreeIterator<Tree<T>> it){
+		OrderIterator<T> oit = new OrderIterator<T>( this, it );
+		String s = "";
+		while(it.hasNext()){
+			Object t = it.next();
+			if(t.getClass().isArray()){
+				Object[] tArray = (Object[]) t;
+				s = s + Arrays.deepToString(tArray) + "\n";
+			}else{
+				s = s + t + " ";
+			}
+		}
+		return s;
+	}
 }
+
