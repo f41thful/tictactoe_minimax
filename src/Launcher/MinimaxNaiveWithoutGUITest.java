@@ -17,15 +17,16 @@ public class MinimaxNaiveWithoutGUITest {
 		IMinimaxStructure<Board> ms0 = new AIMinimaxNaive( Winner.CROSS );
 		IMinimaxStructure<Board> ms1 = new AIMinimaxNaive( Winner.NOTCH );
 		
-		Minimax<Board> m0 = new Minimax<Board>( ms0, 2, Integer.MAX_VALUE);
-		Minimax<Board> m1 = new Minimax<Board>( ms1, 2, Integer.MAX_VALUE);
+		Minimax<Board> m0 = new Minimax<Board>( ms0, 2, 2);
+		Minimax<Board> m1 = new Minimax<Board>( ms1, 2, 2);
 		
 		Minimax<Board> c = m0;
 		
 		System.out.println("STARTING");
 		System.out.println("--------");
-		
-		while(b.getWinner() == Winner.NONE){
+		int times = 2;
+		int current = 0;
+		while(b.getWinner() == Winner.NONE && current < times){
 			treeB = c.generate( b );
 			b = c.getSol( treeB );
 			if(c == m0) c = m1;
@@ -34,6 +35,7 @@ public class MinimaxNaiveWithoutGUITest {
 			System.out.println(treeB.toPostOrderStringWithBranchId( 
 					new Tree.GetString[]{new GetValue()} ));
 			System.out.print("\n\n\n");
+			current++;
 		}
 		
 		System.out.println("Winner: " + b.getWinner());

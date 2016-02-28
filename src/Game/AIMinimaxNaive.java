@@ -38,7 +38,7 @@ public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 	}
 	
 	private void generateBoards(Board elem, int i, int j, Collection<Board> boards){
-		SquareState[] opts = {SquareState.CROSS, SquareState.EMPTY};
+		SquareState[] opts = {SquareState.CROSS, SquareState.NOTCH};
 		for(SquareState op : opts){
 			Board newBoard = new Board(elem);
 			newBoard.set( i, j, op );
