@@ -11,9 +11,11 @@ import Logic.Minimax.IMinimaxStructure;
 public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 
 	private Winner myPlayer;
+	private SquareState firstMove;
 	
-	public AIMinimaxNaive(Winner player){
+	public AIMinimaxNaive(Winner player, SquareState firstMove){
 		myPlayer = player;
+		this.firstMove = firstMove;
 	}
 	
 	@Override
@@ -38,12 +40,9 @@ public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 	}
 	
 	private void generateBoards(Board elem, int i, int j, Collection<Board> boards){
-		SquareState[] opts = {SquareState.CROSS, SquareState.NOTCH};
-		for(SquareState op : opts){
-			Board newBoard = new Board(elem);
-			newBoard.set( i, j, op );
-			boards.add( newBoard );
-		}
+		Board newBoard = new Board(elem);
+		newBoard.set( i, j, elem.nextMove( firstMove ) );
+		boards.add( newBoard );
 	}
 
 }

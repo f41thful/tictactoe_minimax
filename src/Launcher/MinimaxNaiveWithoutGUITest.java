@@ -3,6 +3,7 @@ package Launcher;
 import lib.tree.Tree;
 import Game.AIMinimaxNaive;
 import Game.Board;
+import Game.Board.SquareState;
 import Game.Board.Winner;
 import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
@@ -14,8 +15,9 @@ public class MinimaxNaiveWithoutGUITest {
 	public static void main(String[] args) {
 		Board b = new Board();
 		Tree<Board> treeB;
-		IMinimaxStructure<Board> ms0 = new AIMinimaxNaive( Winner.CROSS );
-		IMinimaxStructure<Board> ms1 = new AIMinimaxNaive( Winner.NOTCH );
+		SquareState firstMove = SquareState.CROSS;
+		IMinimaxStructure<Board> ms0 = new AIMinimaxNaive( Winner.CROSS, firstMove);
+		IMinimaxStructure<Board> ms1 = new AIMinimaxNaive( Winner.NOTCH, firstMove);
 		
 		Minimax<Board> m0 = new Minimax<Board>( ms0, 2, 2);
 		Minimax<Board> m1 = new Minimax<Board>( ms1, 2, 2);

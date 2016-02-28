@@ -143,7 +143,20 @@ public class Board extends Observable{
 	}
 	
 	
-	
+	public SquareState nextMove(SquareState equal){
+		int cross = 0;
+		int notch = 0;
+		for(SquareState[] ss : board){
+			for(SquareState s : ss){
+				if(s == SquareState.CROSS) cross++;
+				else if(s == SquareState.NOTCH) notch++;
+			}
+		}
+		
+		if(cross < notch) return SquareState.CROSS;
+		else if(notch < cross) return SquareState.NOTCH;
+		else return equal;
+	}
 
 
 	private Winner calculateWinner(){
