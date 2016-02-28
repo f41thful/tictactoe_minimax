@@ -9,12 +9,14 @@ import lib.functional.F;
 import lib.functional.Func2;
 import lib.tree.ITreeVisitor;
 import lib.tree.Tree;
+import lib.tree.Tree.GetString;
 import lib.tree.VisitIterator;
 
 import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
 
 public class MinimaxTest {
+	
 	static IMinimaxStructure<Integer[]> st = new IMinimaxStructure<Integer[]>(){
 
 		private Integer[] generateAlt(Integer[] in, int off){
@@ -53,30 +55,26 @@ public class MinimaxTest {
 		
 	};
 	
+	public static class GetValue<T> implements GetString<T>{
+
+		@Override
+		public String get(Tree<T> elem) {
+			Object o = elem.getData( Minimax.KEY );
+			if(o != null){
+				return "Value: " + String.valueOf(o);
+			}
+			return "";
+		}
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		Integer[] array = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		Minimax<Integer[]> minimax = new Minimax<>( st, 2, Integer.MAX_VALUE );
 		Tree<Integer[]> tree = minimax.generate( array );
-		System.out.println(tree.toPostOrderStringWithBranchId());
-		VisitIterator<Integer[]> v = tree.getVisitPostOrderIteratorTree( new ITreeVisitor<Integer[]>() {
-
-			@Override
-			public void visitLeaf(Tree<Integer[]> leaf) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void visitInternalNode(Tree<Integer[]> internalNode) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void visitNode(Tree<Integer[]> node) {
-				System.out.println("Depth: " + node.getDepth() + " value: " + node.getData( Minimax.KEY ));
-			}
-		} );
-		v.applyVisitor();
+		System.out.println(tree.toPostOrderStringWithBranchId(new Tree.GetString[]{
+				new GetValue()
+		}));
 	}
 }

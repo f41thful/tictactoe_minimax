@@ -16,7 +16,7 @@ import lib.tree.visitors.CalculateBranchId;
 
 public class Tree<T> {
 	
-	interface GetString<T>{
+	public interface GetString<T>{
 		public String get(Tree<T> elem);
 	}
 
@@ -110,14 +110,21 @@ public class Tree<T> {
 		return toOrderString( treeIt, null );
 	}
 	
-	public String toPostOrderStringWithBranchId(){
-		ITreeVisitor<T> v = new CalculateBranchId<T>();
-		TreeIterator<Tree<T>> it = new PreOrderIteratorTree<T>( this );
-		VisitIterator<T> vi = new VisitIterator<T>( this, v, it );
-		vi.applyVisitor();
+	public void applyVisitors(ITreeVisitor<T>[] visitors){
+		for(ITreeVisitor<T> v : visitors)
+		{
+			TreeIterator<Tree<T>> it = new PreOrderIteratorTree<T>( this );
+			VisitIterator<T> vi = new VisitIterator<T>( this, v, it );
+			vi.applyVisitor();
+		}
+	}
+	
+	public String toPostOrderStringWithBranchId(GetString<T>[] pgetters){
+		List<GetString<T>> getters = new ArrayList<GetString<T>>();
+		applyVisitors( new ITreeVisitor[]{new CalculateBranchId<T>()});
 		
 		PostOrderIteratorTree<T> treeIt = getPostOrderIteratorTree();
-		GetString<T> g = new GetString<T>(){
+		GetString<T> gId = new GetString<T>(){
 
 			@Override
 			public String get(Tree<T> elem) {
@@ -125,7 +132,20 @@ public class Tree<T> {
 			}
 			
 		};
-		return toOrderString( treeIt, g );
+		
+		GetString<T> gDepth = new GetString<T>(){
+
+			@Override
+			public String get(Tree<T> elem) {
+				return "Depth: " + elem.getDepth();
+			}
+			
+		};
+		
+		getters.add(gId);
+		getters.add(gDepth);
+		for(GetString<T> g : pgetters) getters.add(g);
+		return toOrderString( treeIt, getters );
 		
 	}
 	
@@ -158,12 +178,15 @@ public class Tree<T> {
 	
 	
 	
-	private String toOrderString(TreeIterator<Tree<T>> it, GetString<T> get){
+	private String toOrderString(TreeIterator<Tree<T>> it, List<GetString<T>> get){
 		OrderIterator<T> oit = new OrderIterator<T>( this, it );
 		String s = "";
 		while(oit.hasNext()){
 			Object t = oit.next();
-			if(get != null) s = s + " " + get.get( oit.getLastTree() ) + " ";
+			if(get != null){
+				for(GetString<T> g : get)
+					s = s + " " + g.get( oit.getLastTree() ) + " ";
+			}
 			if(t.getClass().isArray()){
 				Object[] tArray = (Object[]) t;
 				s = s + Arrays.deepToString(tArray) + "\n";
