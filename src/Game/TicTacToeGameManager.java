@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import GUI.BoardGUI;
+import GUI.GUI;
 import Game.Board.SquareState;
 
 public class TicTacToeGameManager implements ActionListener{
-	public BoardGUI gui;
+	public GUI gui;
 	Board b;
 	
 	SquareState nextValue;
-	public TicTacToeGameManager(BoardGUI gui, Board b){
+	public TicTacToeGameManager(GUI gui, Board b){
 		this.gui = gui;
 		this.b = b;
 		nextValue = SquareState.CROSS;

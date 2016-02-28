@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 
-import GUI.BoardGUI;
 import GUI.BoardGUI.Icons;
+import GUI.GUI;
 import Game.Board;
 import Game.TicTacToeGameManager;
 import Game.Board.SquareState;
@@ -40,7 +40,7 @@ public class GUILauncher {
 		
 		Board b = new Board();
 		TicTacToeGameManager m = new TicTacToeGameManager( null, b );
-		BoardGUI gui = new BoardGUI(new NormalIcons(), m, restart);
+		GUI gui = new GUI(new NormalIcons(), m, restart);
 		m.gui = gui;
 		b.addObserver( gui );
 	}
