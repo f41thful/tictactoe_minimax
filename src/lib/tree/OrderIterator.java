@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 public class OrderIterator<T> implements Iterator<T>{
 	Tree<T> obj;
+	Tree<T> last;
 	TreeIterator<Tree<T>> it;
 
 	public OrderIterator(Tree<T> obj, TreeIterator<Tree<T>> it) {
@@ -19,7 +20,8 @@ public class OrderIterator<T> implements Iterator<T>{
 
 	@Override
 	public T next() {
-		return it.next().getElem();
+		last = it.next();
+		return last.getElem();
 	}
 
 	@Override
@@ -27,4 +29,7 @@ public class OrderIterator<T> implements Iterator<T>{
 		it.remove();
 	}
 
+	public Tree<T> getLastTree(){
+		return last;
+	}
 }

@@ -9,9 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import javax.swing.text.AbstractDocument.BranchElement;
+
 import lib.IGenerator;
+import lib.tree.visitors.CalculateBranchId;
 
 public class Tree<T> {
+	
+	interface GetString<T>{
+		public String get(Tree<T> elem);
+	}
 
 	protected Tree<T> p;
 	protected T e;
@@ -94,13 +101,32 @@ public class Tree<T> {
 	
 	public String toPostOrderString(){
 		PostOrderIteratorTree<T> treeIt = getPostOrderIteratorTree();
-		return toOrderString( treeIt );
+		return toOrderString( treeIt, null );
 	}
 
 	
 	public String toPreOrderString(){
 		PreOrderIteratorTree<T> treeIt = getPreOrderIteratorTree();
-		return toOrderString( treeIt );
+		return toOrderString( treeIt, null );
+	}
+	
+	public String toPostOrderStringWithBranchId(){
+		ITreeVisitor<T> v = new CalculateBranchId<T>();
+		TreeIterator<Tree<T>> it = new PreOrderIteratorTree<T>( this );
+		VisitIterator<T> vi = new VisitIterator<T>( this, v, it );
+		vi.applyVisitor();
+		
+		PostOrderIteratorTree<T> treeIt = getPostOrderIteratorTree();
+		GetString<T> g = new GetString<T>(){
+
+			@Override
+			public String get(Tree<T> elem) {
+				return (String) elem.getData( CalculateBranchId.KEY_COMPOSE_BRANCH );
+			}
+			
+		};
+		return toOrderString( treeIt, g );
+		
 	}
 	
 	public int getDepth(){
@@ -122,16 +148,22 @@ public class Tree<T> {
 		return map.get( key );
 	}
 	
-	public Collection<Tree<T>> getChildren(){
+	public List<Tree<T>> getChildren(){
 		return c;
 	}
 	
+	public Tree<T> getParent(){
+		return p;
+	}
 	
-	private String toOrderString(TreeIterator<Tree<T>> it){
+	
+	
+	private String toOrderString(TreeIterator<Tree<T>> it, GetString<T> get){
 		OrderIterator<T> oit = new OrderIterator<T>( this, it );
 		String s = "";
-		while(it.hasNext()){
-			Object t = it.next();
+		while(oit.hasNext()){
+			Object t = oit.next();
+			if(get != null) s = s + " " + get.get( oit.getLastTree() ) + " ";
 			if(t.getClass().isArray()){
 				Object[] tArray = (Object[]) t;
 				s = s + Arrays.deepToString(tArray) + "\n";

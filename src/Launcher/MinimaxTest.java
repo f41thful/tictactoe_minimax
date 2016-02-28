@@ -57,7 +57,7 @@ public class MinimaxTest {
 		Integer[] array = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		Minimax<Integer[]> minimax = new Minimax<>( st, 2, Integer.MAX_VALUE );
 		Tree<Integer[]> tree = minimax.generate( array );
-		System.out.println(tree.toPreOrderString());
+		System.out.println(tree.toPostOrderStringWithBranchId());
 		VisitIterator<Integer[]> v = tree.getVisitPostOrderIteratorTree( new ITreeVisitor<Integer[]>() {
 
 			@Override

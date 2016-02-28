@@ -5,10 +5,17 @@ import java.util.Collection;
 import java.util.List;
 
 import Game.Board.SquareState;
+import Game.Board.Winner;
 import Logic.Minimax.IMinimaxStructure;
 
 public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 
+	private Winner myPlayer;
+	
+	public AIMinimaxNaive(Winner player){
+		myPlayer = player;
+	}
+	
 	@Override
 	public List<Board> generate(Board elem) {
 		List<Board> boards = new ArrayList<Board>();
@@ -23,8 +30,11 @@ public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 	}
 
 	@Override
-	public int evaluate(Board value) {
-		return 0;
+	public int evaluate(Board board) {
+		Winner winner = board.getWinner();
+		if(winner == myPlayer) return 2;
+		else if(winner == Winner.NONE) return 1;
+		else return 0;
 	}
 	
 	private void generateBoards(Board elem, int i, int j, Collection<Board> boards){
