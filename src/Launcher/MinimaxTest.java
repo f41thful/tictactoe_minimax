@@ -6,11 +6,12 @@ import java.util.Collection;
 import java.util.List;
 
 import lib.functional.F;
-import lib.functional.Function;
+import lib.functional.Func2;
 import lib.tree.ITreeVisitor;
 import lib.tree.Tree;
 import lib.tree.VisitIterator;
 
+import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
 
 public class MinimaxTest {
@@ -40,50 +41,42 @@ public class MinimaxTest {
 			for(Integer i : value){
 				c.add(i);
 			}
-			return F.reduce( c, new Function(){
+			return F.reduce( c, new Func2<Integer>(){
 
 				@Override
-				public Integer apply(Object... args) {
-					Integer arg0 = (Integer) args[0];
-					Integer arg1 = (Integer) args[1];
-					return arg0 + arg1;
+				public Integer apply(Integer a0, Integer a1) {
+					return a0 + a1;
 				}
 				
 			});
 		}
 		
 	};
+	
 	public static void main(String[] args) {
 		Integer[] array = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-		Tree<Integer[]> tree = Tree.generateTree( array, st, 2, Integer.MAX_VALUE );
-		System.out.println(tree.toPreOrderString());
-		VisitIterator<Integer[]> v = tree.getVisitPostOrderIteratorTree( 
-				new ITreeVisitor<Integer[]>() {
-
-					@Override
-					public void visitLeaf(Tree<Integer[]> leaf) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void visitInternalNode(Tree<Integer[]> internalNode) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void visitNode(Tree<Integer[]> node) {
-						int value = st.evaluate( node.getElem() );
-						node.putdata( "value", value );
-						System.out.println("Elem: " + Arrays.toString(node.getElem()) + ", Value: " + value );
-					}
-
-					
-					
-				});
+		Minimax<Integer[]> minimax = new Minimax<>( st, 2, Integer.MAX_VALUE );
+		Tree<Integer[]> tree = minimax.generate( array );
 		
+		VisitIterator<Integer[]> v = tree.getVisitPostOrderIteratorTree( new ITreeVisitor<Integer[]>() {
+
+			@Override
+			public void visitLeaf(Tree<Integer[]> leaf) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void visitInternalNode(Tree<Integer[]> internalNode) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void visitNode(Tree<Integer[]> node) {
+				System.out.println("Depth: " + node.getDepth() + ", Value: " + node.getData( Minimax.KEY ));
+			}
+		} );
 		v.applyVisitor();
 	}
 }

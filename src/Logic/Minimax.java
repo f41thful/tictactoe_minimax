@@ -4,55 +4,60 @@ import java.util.Collection;
 
 import lib.IGenerator;
 import lib.functional.F;
-import lib.functional.Function;
+import lib.functional.Func1;
+import lib.functional.Func2;
 import lib.tree.ITreeVisitor;
 import lib.tree.Tree;
 import lib.tree.VisitIterator;
 
 public class Minimax<T> {
+
+	public static final String KEY = "minimaxvalue";
 	public interface IMinimaxStructure<T> extends IGenerator<T>{
 		public int evaluate(T value);
 	}
 	
 	class Evaluation implements ITreeVisitor<T>{
-		Function min = new Function<Integer, Integer>(){
+		Func2 min = new Func2<Integer>(){
 
 			@Override
-			public Integer apply(Integer... args) {
-				return Math.min( args[0], args[1] );
+			public Integer apply(Integer a0, Integer a1) {
+				
+				return Math.min( a0, a1);
 			}
 
 		};
 		
-		Function max = new Function<Integer, Integer>(){
+		Func2 max = new Func2<Integer>(){
 
 			@Override
-			public Integer apply(Integer... args) {
-				return Math.max( args[0], args[1] );
-			}
-			
-		};
-		
-		Function getKey = new Function<Tree<T>, Integer>(){
-
-			@Override
-			public Integer apply(Tree<T>... args) {
-				return (Integer) args[0].getData( key );
+			public Integer apply(Integer a0, Integer a1) {
+				return Math.max( a0, a1 );
 			}
 			
 		};
 		
-		String key = "key";
+		Func1 getKey = new Func1<Tree<T>, Integer>(){
 
-		Function[] funcs;
+			@Override
+			public Integer apply(Tree<T> a) {
+				return (Integer) a.getData( KEY );
+			}
+			
+		};
+		
+
+		Func2<Integer>[] funcs;
 		
 		public Evaluation() {
-			 funcs = new Function[2];
+			 funcs = new Func2[2];
+			 funcs[0] = max;
+			 funcs[1] = min;
 		}
 		
 		@Override
 		public void visitLeaf(Tree<T> leaf) {
-			leaf.putdata( key, st.evaluate( leaf.getElem() ));
+			leaf.putdata( KEY, st.evaluate( leaf.getElem() ));
 		}
 
 		@Override
@@ -60,7 +65,7 @@ public class Minimax<T> {
 			int depth = internalNode.getDepth();
 			Collection<Tree<T>> children = internalNode.getChildren();
 			int value = F.reduce( F.map( children, getKey), funcs[(depth % 2)]);
-			internalNode.putdata( key, value );
+			internalNode.putdata( KEY, value );
 		}
 
 		@Override

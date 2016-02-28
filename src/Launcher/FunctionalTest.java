@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import lib.functional.F;
-import lib.functional.Function;
+import lib.functional.Func2;
 
 public class FunctionalTest {
 
@@ -15,15 +15,12 @@ public class FunctionalTest {
 		c.add( 3 );
 		c.add( 4 );
 		
-		Function<Integer, Integer> f = new Function(){
+		Func2<Integer> f = new Func2<Integer>(){
 
 			@Override
-			public Object apply(Object... args) {
-				Integer arg0 = (Integer) args[0];
-				Integer arg1 = (Integer) args[1];
-				return arg0 + arg1;
+			public Integer apply(Integer a0, Integer a1) {
+				return a0 + a1;
 			}
-			
 		};
 		
 		Integer val = F.reduce( c, f );
