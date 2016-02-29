@@ -35,10 +35,10 @@ public class TreeItemLayout{
 	public TreeItemLayout(PanelLayout topC, int numChilds){
 		children = new ArrayList<PanelLayout>();
 		topContainer = topC;
-		if(topContainer == null) topContainer = new PanelLayout(BoxLayout.Y_AXIS);
+		if(topContainer == null) topContainer = new PanelLayout(BoxLayout.X_AXIS);
 			
-		nodeContainer = new PanelLayout(BoxLayout.X_AXIS);
-		childrenContainer = new PanelLayout(BoxLayout.X_AXIS);
+		nodeContainer = new PanelLayout(BoxLayout.Y_AXIS);
+		childrenContainer = new PanelLayout(BoxLayout.Y_AXIS);
 		
 		setChildNumber(numChilds);
 		
@@ -61,7 +61,7 @@ public class TreeItemLayout{
 	
 	public void setChildNumber(int number){
 		for(int i = 0; i < number; i++){
-			PanelLayout pl = new PanelLayout(BoxLayout.Y_AXIS);
+			PanelLayout pl = new PanelLayout(BoxLayout.X_AXIS);
 			children.add( pl );
 			childrenContainer.add( pl );
 		}
