@@ -16,7 +16,7 @@ public class F {
 	}
 	
 	public static <T> T reduce(Collection<T> c, Func2<T> f){
-		if(c == null || c.size() <= 1) return null;
+		if(c == null) return null;
 		List<T> list = new ArrayList<T>();
 		for(T t : c){
 			list.add(t);

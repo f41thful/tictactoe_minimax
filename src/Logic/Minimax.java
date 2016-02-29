@@ -113,6 +113,7 @@ public class Minimax<T> {
 	public T getSol(Tree<T> tree){
 		Object o = tree.getData( KEY );
 		if(o == null) return null;
+		if(tree.getChildren() == null || tree.getChildren().size() == 0) return tree.getElem();
 		
 		Integer value = (Integer) o;
 		for(Tree<T> t : tree.getChildren()){

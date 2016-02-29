@@ -16,17 +16,19 @@ public class MinimaxNaiveWithoutGUITest {
 		Board b = new Board();
 		Tree<Board> treeB;
 		SquareState firstMove = SquareState.CROSS;
+		int breadth = 2;
+		int depth = 9;
 		IMinimaxStructure<Board> ms0 = new AIMinimaxNaive( Winner.CROSS, firstMove);
 		IMinimaxStructure<Board> ms1 = new AIMinimaxNaive( Winner.NOTCH, firstMove);
 		
-		Minimax<Board> m0 = new Minimax<Board>( ms0, 2, 2);
-		Minimax<Board> m1 = new Minimax<Board>( ms1, 2, 2);
+		Minimax<Board> m0 = new Minimax<Board>( ms0, depth, breadth);
+		Minimax<Board> m1 = new Minimax<Board>( ms1, depth, breadth);
 		
 		Minimax<Board> c = m0;
 		
 		System.out.println("STARTING");
 		System.out.println("--------");
-		int times = 2;
+		int times = 1;
 		int current = 0;
 		while(b.getWinner() == Winner.NONE && current < times){
 			treeB = c.generate( b );

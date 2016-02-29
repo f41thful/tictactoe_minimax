@@ -33,8 +33,10 @@ public class Tree<T> {
 		if(curDepth > maxDepth) return null;
 		Tree<E> tree = new Tree<E>(elem);
 		List<E> children = g.generate( elem );
+		
+		if(children == null) children = new ArrayList<E>();
 	
-		for(int i = 0; i < maxBreadth && i < children.size(); i++){
+		for(int i = 0;i < children.size() && i < maxBreadth; i++){
 			E child = children.get( i );
 			Tree<E> childTree = generateTreeImp(child, g, curDepth + 1, maxDepth, maxBreadth);
 			if(childTree != null)
