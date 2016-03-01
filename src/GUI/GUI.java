@@ -36,7 +36,7 @@ public class GUI implements Observer{
 		
 	}
 	
-	static ActionListener defaultAl = new ActionListener(){
+	public static ActionListener defaultAl = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 	}};
