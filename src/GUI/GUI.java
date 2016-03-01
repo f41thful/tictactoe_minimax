@@ -57,6 +57,9 @@ public class GUI implements Observer{
 	
 	JLabel winnerName;
 	JPanel winnerPanel;
+	
+	JPanel gamePanel;
+	JPanel sideBoard;
 
 	public GUI(){
 		this(new Icons(), defaultAl, defaultAl);
@@ -64,17 +67,21 @@ public class GUI implements Observer{
 	
 	public GUI(Icons icons, ActionListener al, ActionListener restart){
 		this.restart = restart;
+		gamePanel = new JPanel();
+		BoxLayout gamePanelLayout = new BoxLayout(gamePanel, BoxLayout.Y_AXIS);
+		gamePanel.setLayout( gamePanelLayout );
 		board = new BoardGUI(icons, al);
 		observer = board;
 		
 		winnerPanel = getWinnerPanel(restart);
-		
+		gamePanel.add( board.getPanel() );
+		gamePanel.add( winnerPanel );
 
 		frame = new JFrame();
 		JPanel topPane = new JPanel();
-		topPane.setLayout( new BoxLayout(topPane, BoxLayout.Y_AXIS) );
-		topPane.add(board.getPanel());
-		topPane.add(winnerPanel);
+		topPane.setLayout( new BoxLayout(topPane, BoxLayout.X_AXIS) );
+		topPane.add(gamePanel);
+		addSideBoard(sideBoard, topPane);
 		frame.add(topPane);
 		
 		
@@ -125,7 +132,15 @@ public class GUI implements Observer{
 		return winnerPanel;
 	}
 	
-	
+	public void addSideBoard(JPanel panel, JPanel to){
+		if(sideBoard != null){
+			to.remove( sideBoard );
+		}
+		
+		sideBoard = panel;
+		if(sideBoard != null)
+			to.add( sideBoard );
+	}
 
 
 	
