@@ -1,9 +1,6 @@
 package GUI;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -20,10 +17,25 @@ import javax.swing.WindowConstants;
 import GUI.BoardGUI.Icons;
 import Game.Board.Message;
 import Game.Board.MessageType;
-import Game.Board.SquareState;
 import Game.Board.Winner;
 
 public class GUI implements Observer{
+	
+	public static class NormalIcons extends Icons{
+		public NormalIcons(){}
+		
+		@Override
+		public ImageIcon getNotch() {
+			return new ImageIcon("icons/notch.png");
+		}
+
+		@Override
+		public ImageIcon getCross() {
+			return new ImageIcon("icons/cross.png");
+		}
+		
+	}
+	
 	static ActionListener defaultAl = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
