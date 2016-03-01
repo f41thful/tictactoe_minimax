@@ -93,6 +93,11 @@ public class BoardGUI implements Observer{
 		}
 	}
 	
+	public void setSize(int width, int height){
+		boardPanel.setSize( width, height );
+		boardPanel.setPreferredSize( new Dimension(width, height) );
+	}
+	
 	private void set(int row, int col, SquareState value){
 		JButton b = buttons[row][col];
 			if(value == SquareState.CROSS) b.setIcon( icons.getCross() );

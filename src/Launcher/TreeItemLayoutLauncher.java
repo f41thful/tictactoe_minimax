@@ -5,14 +5,15 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 import TreeGUI.TreeItemLayout;
 import TreeGUI.TreeItemLayout.PanelLayout;
 
 public class TreeItemLayoutLauncher {
-	public static final int NUM_CHILDREN = 3;
-	public static final int DEPTH = 2;
+	public static final int NUM_CHILDREN = 4;
+	public static final int DEPTH = 4;
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
@@ -24,7 +25,7 @@ public class TreeItemLayoutLauncher {
 		til.addComponent(button);
 		
 		addElements(til, DEPTH, 0);
-		frame.add( top.panel );
+		frame.add( new JScrollPane(top.panel) );
 
 		frame.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 		frame.setSize( new Dimension(500, 500) );

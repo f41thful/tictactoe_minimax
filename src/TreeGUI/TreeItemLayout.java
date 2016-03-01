@@ -1,7 +1,6 @@
 package TreeGUI;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
 

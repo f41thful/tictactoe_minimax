@@ -2,17 +2,35 @@ package Launcher;
 
 import javax.swing.JFrame;
 
-import utils.GUIFactory;
+import lib.tree.ITreeVisitor;
+import lib.tree.Tree;
+
+import utils.FactoryGUI;
 import GUI.BoardGUI;
 import GUI.GUI;
 import Game.Board;
 import Game.Board.SquareState;
+import Game.FacadeAI;
+import TreeGUI.BoardTreetoTreeGUI;
+import TreeGUI.TreeItemLayout.PanelLayout;
 
 public class BoardGUITreeLauncher {
 	
 	
 	public static void main(String[] args) {
-		singleBoard();
+		//singleBoard();
+		wholeTree();
+	}
+	
+	public static void wholeTree(){
+		Board b = new Board();
+		Tree<Board> tree = FacadeAI.generateNaive( b, 2, 2 );
+		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
+		tree.applyVisitors( new ITreeVisitor[]{v} );
+	
+		JFrame frame = FactoryGUI.getJFrame();
+		frame.add( v.getPanel() );
+		frame.pack();
 	}
 	
 	public static void singleBoard(){
@@ -20,8 +38,8 @@ public class BoardGUITreeLauncher {
 		b.set( 0, 0, SquareState.CROSS );
 		b.set( 0, 1, SquareState.CROSS );
 		b.set( 0, 2, SquareState.NOTCH );
-		JFrame frame = GUIFactory.getJFrame();
-		BoardGUI boardgui = new BoardGUI(new GUI.NormalIcons(), GUI.defaultAl, b);
+		JFrame frame = FactoryGUI.getJFrame();
+		BoardGUI boardgui = new BoardGUI(GUI.defaultIcons, GUI.defaultAl, b);
 		frame.add( boardgui.getPanel() );
 		frame.pack();
 	}

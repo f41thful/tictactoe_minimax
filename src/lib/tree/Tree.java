@@ -93,6 +93,10 @@ public class Tree<T> {
 		return !isLeaf();
 	}
 	
+	public boolean isRoot(){
+		return p == null;
+	}
+	
 	public T getElem(){
 		return e;
 	}
@@ -175,6 +179,7 @@ public class Tree<T> {
 		return p;
 	}
 	
+
 	
 	
 	private String toOrderString(TreeIterator<Tree<T>> it, List<GetString<T>> get){

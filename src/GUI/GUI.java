@@ -36,6 +36,8 @@ public class GUI implements Observer{
 		
 	}
 	
+	public static NormalIcons defaultIcons = new NormalIcons();
+	
 	public static ActionListener defaultAl = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
