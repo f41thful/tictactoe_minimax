@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -14,12 +15,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import GUI.BoardGUI.Icons;
 import Game.Board.Message;
 import Game.Board.MessageType;
 import Game.Board.Winner;
 
 public class GUI implements Observer{
+	
+	public static class Icons{
+		public ImageIcon getNotch(){return null;};
+		public ImageIcon getCross(){return null;};
+		public ImageIcon getEmpty(){return null;};
+	}
 	
 	public static class NormalIcons extends Icons{
 		public NormalIcons(){}

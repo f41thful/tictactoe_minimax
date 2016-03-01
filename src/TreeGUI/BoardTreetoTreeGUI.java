@@ -3,11 +3,12 @@ package TreeGUI;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import GUI.BoardGUI;
-import GUI.BoardGUI.Icons;
+import GUI.GUI.Icons;
 import Game.Board;
 import TreeGUI.TreeItemLayout.PanelLayout;
 import lib.tree.ITreeVisitor;
@@ -18,12 +19,28 @@ import GUI.GUI;
  * Creates Tree when applied with a preorder walk of a tree.
  */
 public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
+	static class SmallIcons extends Icons{
+		@Override
+		public ImageIcon getNotch() {
+			return new ImageIcon("icons/notch_small.png");
+		}
+
+		@Override
+		public ImageIcon getCross() {
+			return new ImageIcon("icons/cross_small.png");
+		}
+	}
+	
+	
 	public static final String KEY = "BoardTreetoTreeGUI_Panel";
 	public static final int WIDTH = 100;
 	public static final int HEIGHT = 100;
+	public static final Icons SMALL_ICONS = new SmallIcons();
 	
 	JScrollPane scrollTop;
 	PanelLayout top;
+	
+	
 	
 	public BoardTreetoTreeGUI(){
 		top = new PanelLayout( BoxLayout.X_AXIS );
@@ -50,7 +67,7 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 			System.out.println("ERROR in BoardTreetoTreeGUI, the top PanelLayout is null");
 		}
 		TreeItemLayout til = new TreeItemLayout( cTop, node.getChildren().size() );
-		BoardGUI board = new BoardGUI(GUI.defaultIcons, GUI.defaultAl, node.getElem());
+		BoardGUI board = new BoardGUI(SMALL_ICONS, GUI.defaultAl, node.getElem());
 		board.setSize(WIDTH, HEIGHT);
 		til.addComponent(board.getPanel());
 		

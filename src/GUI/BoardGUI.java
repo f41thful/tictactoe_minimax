@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GUI.GUI.Icons;
 import Game.Board;
 import Game.Board.Message;
 import Game.Board.MessageType;
@@ -18,11 +19,7 @@ import Game.Board.SquareState;
 import Game.Board.Winner;
 
 public class BoardGUI implements Observer{
-	public static class Icons{
-		public ImageIcon getNotch(){return null;};
-		public ImageIcon getCross(){return null;};
-		public ImageIcon getEmpty(){return null;};
-	}
+	
 	
 	static final int SIZE = 3;
 	JButton[][] buttons;

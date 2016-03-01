@@ -12,7 +12,6 @@ import Game.Board;
 import Game.Board.SquareState;
 import Game.FacadeAI;
 import TreeGUI.BoardTreetoTreeGUI;
-import TreeGUI.TreeItemLayout.PanelLayout;
 
 public class BoardGUITreeLauncher {
 	
