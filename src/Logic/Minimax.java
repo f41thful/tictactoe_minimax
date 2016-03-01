@@ -78,7 +78,12 @@ public class Minimax<T> {
 	IMinimaxStructure<T> st;
 	Tree<T> tree;
 	int depth, breadth;
-	
+
+	public static String getFuncName(int value){
+		if(value % 2 == 0){ return "max";}
+		else return "min";
+	}
+
 	public Minimax(IMinimaxStructure<T> st){
 		this.st = st;
 		depth = Integer.MAX_VALUE;

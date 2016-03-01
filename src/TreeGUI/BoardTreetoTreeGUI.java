@@ -73,7 +73,9 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 		if(value != null)
 			til.setValue( value );
 		
-		til.setDepth( String.valueOf(node.getDepth()) );
+		int depth = node.getDepth();
+		til.setDepth( String.valueOf(depth) );
+		til.setFunc( Minimax.getFuncName( depth ) );
 
 		BoardGUI board = new BoardGUI(SMALL_ICONS, GUI.defaultAl, node.getElem());
 		board.setSize(WIDTH, HEIGHT);

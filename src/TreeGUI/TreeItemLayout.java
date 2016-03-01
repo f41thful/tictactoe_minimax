@@ -13,24 +13,25 @@ import javax.swing.SwingConstants;
 
 public class TreeItemLayout{
 	public static class PanelLayout{
+		public static final int NUM_LABELS = 3;
 		public JPanel panel;
-		public JLabel label1;
-		public JLabel label2;
+		public JLabel[] labels;
 		public BoxLayout layout;
 		
 		public PanelLayout(int orientation){
 			this.panel = new JPanel();
 			this.layout = new BoxLayout(panel, orientation);
-			label1 = new JLabel();
-			label2 = new JLabel();
+			labels = new JLabel[NUM_LABELS];
 			panel.setLayout( layout );
 			panel.setBorder(BorderFactory.createLineBorder(Color.black));
 			
-			label1.setAlignmentX( SwingConstants.CENTER );
-			label2.setAlignmentX( SwingConstants.CENTER );
+			for(int i = 0; i < NUM_LABELS; i++){
+				JLabel l = new JLabel();
+				l.setAlignmentX( SwingConstants.CENTER );
+				panel.add( l);
+				labels[i] = l;
+			}
 			
-			panel.add( label1 );
-			panel.add( label2 );
 			
 		}
 		
@@ -42,13 +43,12 @@ public class TreeItemLayout{
 			panel.add(c);
 		}
 		
-		public void setLabel1(String text){
-			label1.setText( text );
+		public void setLabel(int i, String text){
+			if(i < labels.length)
+				labels[i].setText( text );
 		}
 		
-		public void setLabel2(String text){
-			label2.setText( text );
-		}
+		
 	}
 	
 	PanelLayout topContainer;
@@ -100,10 +100,14 @@ public class TreeItemLayout{
 	}
 	
 	public void setValue(String text){
-		nodeContainer.setLabel1("Value: " + text );
+		nodeContainer.setLabel(0, "Value: " + text );
 	}
 	
 	public void setDepth(String text){
-		nodeContainer.setLabel2( "Depth: " + text );
+		nodeContainer.setLabel(1, "Depth: " + text );
+	}
+	
+	public void setFunc(String text){
+		nodeContainer.setLabel(2, text );
 	}
 }
