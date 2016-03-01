@@ -23,7 +23,7 @@ public class BoardGUITreeLauncher {
 	
 	public static void wholeTree(){
 		Board b = new Board();
-		Tree<Board> tree = FacadeAI.generateNaive( b, 2, 2 );
+		Tree<Board> tree = FacadeAI.generateNaive( b, 6, 2 );
 		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
 		tree.applyVisitors( new ITreeVisitor[]{v} );
 	

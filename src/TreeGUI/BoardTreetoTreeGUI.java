@@ -14,6 +14,7 @@ import TreeGUI.TreeItemLayout.PanelLayout;
 import lib.tree.ITreeVisitor;
 import lib.tree.Tree;
 import GUI.GUI;
+import Logic.Minimax;
 
 /*
  * Creates Tree when applied with a preorder walk of a tree.
@@ -67,6 +68,13 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 			System.out.println("ERROR in BoardTreetoTreeGUI, the top PanelLayout is null");
 		}
 		TreeItemLayout til = new TreeItemLayout( cTop, node.getChildren().size() );
+
+		String value = String.valueOf(node.getData( Minimax.KEY ));
+		if(value != null)
+			til.setValue( value );
+		
+		til.setDepth( String.valueOf(node.getDepth()) );
+
 		BoardGUI board = new BoardGUI(SMALL_ICONS, GUI.defaultAl, node.getElem());
 		board.setSize(WIDTH, HEIGHT);
 		til.addComponent(board.getPanel());

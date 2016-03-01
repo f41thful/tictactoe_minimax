@@ -1,21 +1,37 @@
 package TreeGUI;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class TreeItemLayout{
 	public static class PanelLayout{
 		public JPanel panel;
+		public JLabel label1;
+		public JLabel label2;
 		public BoxLayout layout;
 		
 		public PanelLayout(int orientation){
 			this.panel = new JPanel();
 			this.layout = new BoxLayout(panel, orientation);
+			label1 = new JLabel();
+			label2 = new JLabel();
 			panel.setLayout( layout );
+			panel.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			label1.setAlignmentX( SwingConstants.CENTER );
+			label2.setAlignmentX( SwingConstants.CENTER );
+			
+			panel.add( label1 );
+			panel.add( label2 );
+			
 		}
 		
 		public void add(PanelLayout pl){
@@ -24,6 +40,14 @@ public class TreeItemLayout{
 		
 		public void add(Component c){
 			panel.add(c);
+		}
+		
+		public void setLabel1(String text){
+			label1.setText( text );
+		}
+		
+		public void setLabel2(String text){
+			label2.setText( text );
 		}
 	}
 	
@@ -73,5 +97,13 @@ public class TreeItemLayout{
 	public void setTopContainer(PanelLayout pl){
 		pl.add( nodeContainer );
 		pl.add(childrenContainer);
+	}
+	
+	public void setValue(String text){
+		nodeContainer.setLabel1("Value: " + text );
+	}
+	
+	public void setDepth(String text){
+		nodeContainer.setLabel2( "Depth: " + text );
 	}
 }
