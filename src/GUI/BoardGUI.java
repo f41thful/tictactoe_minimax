@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Game.Board;
 import Game.Board.Message;
 import Game.Board.MessageType;
 import Game.Board.SquareState;
@@ -31,6 +32,15 @@ public class BoardGUI implements Observer{
 	
 	Icons icons;
 	ActionListener al;
+	
+	public BoardGUI(Icons icons, ActionListener al, Board board){
+		this(icons, al);
+		for(int i = 0; i < board.getNumRows(); i++){
+			for(int j = 0; j < board.getNumCols(); j++){
+				set(i, j, board.get( i, j ));
+			}
+		}
+	}
 	
 	public BoardGUI(Icons icons, ActionListener al){
 		this.icons = icons;
@@ -78,12 +88,16 @@ public class BoardGUI implements Observer{
 		Message m = (Message) arg1;
 		if(m.type == MessageType.SET)
 		{
-			JButton b = buttons[m.row][m.col];
-			if(m.value == SquareState.CROSS) b.setIcon( icons.getCross() );
-			else if(m.value == SquareState.NOTCH) b.setIcon( icons.getNotch() );
-			b.setEnabled(false);
+			set(m.row, m.col, (SquareState) m.value);
 		}else if(m.type == MessageType.WINNER && m.value != Winner.NONE){
 			disableBoardInput();
 		}
+	}
+	
+	private void set(int row, int col, SquareState value){
+		JButton b = buttons[row][col];
+			if(value == SquareState.CROSS) b.setIcon( icons.getCross() );
+			else if(value == SquareState.NOTCH) b.setIcon( icons.getNotch() );
+			b.setEnabled(false);
 	}
 }
