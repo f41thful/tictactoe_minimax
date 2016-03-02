@@ -38,4 +38,10 @@ public class FactoryGUI {
 		tree.applyVisitors( new ITreeVisitor[]{v} );
 		return v.getPanel();
 	}
+	
+	public static BoardTreetoTreeGUI getGUIInfo(Tree<Board> tree){
+		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
+		tree.applyVisitors( new ITreeVisitor[]{v} );
+		return v;
+	}
 }

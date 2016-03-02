@@ -1,5 +1,6 @@
 package Launcher;
 
+import utils.TreeMinimax;
 import lib.tree.Tree;
 import Game.AIMinimaxNaive;
 import Game.Board;
@@ -32,7 +33,7 @@ public class MinimaxNaiveWithoutGUITest {
 		int current = 0;
 		while(b.getWinner() == Winner.NONE && current < times){
 			treeB = c.generate( b );
-			b = c.getSol( treeB );
+			b = TreeMinimax.getSol( treeB ).elem;
 			if(c == m0) c = m1;
 			else c = m0;
 			

@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 public class TreeItemLayout{
 	public static class PanelLayout{
@@ -48,13 +49,17 @@ public class TreeItemLayout{
 				labels[i].setText( text );
 		}
 		
-		
+		public void setSelected(){
+			panel.setBorder( null );
+			panel.setBorder(BorderFactory.createLineBorder(Color.RED,7));
+		}
 	}
 	
 	PanelLayout topContainer;
 	PanelLayout nodeContainer;
 	PanelLayout childrenContainer;
 	List<PanelLayout> children;
+	List<TreeItemLayout> childrenItemLayout;
 	public TreeItemLayout(PanelLayout topC, int numChilds){
 		children = new ArrayList<PanelLayout>();
 		topContainer = topC;
@@ -62,6 +67,7 @@ public class TreeItemLayout{
 			
 		nodeContainer = new PanelLayout(BoxLayout.Y_AXIS);
 		childrenContainer = new PanelLayout(BoxLayout.Y_AXIS);
+		childrenItemLayout = new ArrayList<TreeItemLayout>();
 		
 		setChildNumber(numChilds);
 		
@@ -109,5 +115,17 @@ public class TreeItemLayout{
 	
 	public void setFunc(String text){
 		nodeContainer.setLabel(2, text );
+	}
+	
+	public void select(List<Integer> list, int cIndex){
+		if(list != null && cIndex < list.size()){
+			int index = list.get( cIndex );
+			children.get( index ).setSelected();
+			childrenItemLayout.get( index ).select( list, cIndex + 1 );
+		}
+	}
+	
+	public void add(TreeItemLayout item){
+		childrenItemLayout.add( item );
 	}
 }

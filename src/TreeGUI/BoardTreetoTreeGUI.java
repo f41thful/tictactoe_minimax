@@ -34,13 +34,14 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 	
 	
 	public static final String KEY = "BoardTreetoTreeGUI_Panel";
+	public static final String KEY_TIL = "BoardTreetoTreeGUI_Til";
 	public static final int WIDTH = 100;
 	public static final int HEIGHT = 100;
 	public static final Icons SMALL_ICONS = new SmallIcons();
 	
 	JScrollPane scrollTop;
 	PanelLayout top;
-	
+	TreeItemLayout topTreeItemLayout;
 	
 	
 	public BoardTreetoTreeGUI(){
@@ -68,6 +69,12 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 			System.out.println("ERROR in BoardTreetoTreeGUI, the top PanelLayout is null");
 		}
 		TreeItemLayout til = new TreeItemLayout( cTop, node.getChildren().size() );
+		node.putdata( KEY_TIL, til );
+		if(!node.isRoot()){
+			((TreeItemLayout)node.getParent().getData( KEY_TIL )).add( til );
+		}else{
+			topTreeItemLayout = til;
+		}
 
 		String value = String.valueOf(node.getData( Minimax.KEY ));
 		if(value != null)
@@ -98,6 +105,10 @@ public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
 	
 	public JScrollPane getPanel(){
 		return scrollTop;
+	}
+	
+	public TreeItemLayout getTopTreeItemLayout(){
+		return topTreeItemLayout;
 	}
 
 }
