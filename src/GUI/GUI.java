@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -7,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -139,8 +142,10 @@ public class GUI implements Observer{
 		JPanel textPane = new JPanel();
 
 		winnerPanel = new JPanel();
-		BoxLayout layout = new BoxLayout(winnerPanel, BoxLayout.Y_AXIS);
+		BoxLayout layout = new BoxLayout(winnerPanel, BoxLayout.X_AXIS);
+		BoxLayout textLayout = new BoxLayout(textPane, BoxLayout.X_AXIS);
 		winnerPanel.setLayout( layout );
+		textPane.setLayout( textLayout );
 
 		winnerText.setOpaque(false);
 		winnerText.setFont( font );
@@ -155,6 +160,7 @@ public class GUI implements Observer{
 		textPane.add( winnerText);
 		textPane.add( winnerName);
 		winnerPanel.add(textPane);
+		winnerPanel.add(Box.createRigidArea( new Dimension(20, 0) ));
 		winnerPanel.add(restartButton);
 		
 		winnerPanel.setVisible( false );
