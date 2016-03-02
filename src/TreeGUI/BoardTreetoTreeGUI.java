@@ -20,24 +20,14 @@ import Logic.Minimax;
  * Creates Tree when applied with a preorder walk of a tree.
  */
 public class BoardTreetoTreeGUI implements ITreeVisitor<Game.Board>{
-	static class SmallIcons extends Icons{
-		@Override
-		public ImageIcon getNotch() {
-			return new ImageIcon("icons/notch_small.png");
-		}
-
-		@Override
-		public ImageIcon getCross() {
-			return new ImageIcon("icons/cross_small.png");
-		}
-	}
+	
 	
 	
 	public static final String KEY = "BoardTreetoTreeGUI_Panel";
 	public static final String KEY_TIL = "BoardTreetoTreeGUI_Til";
 	public static final int WIDTH = 100;
 	public static final int HEIGHT = 100;
-	public static final Icons SMALL_ICONS = new SmallIcons();
+	public static final Icons SMALL_ICONS = new GUI.SmallIcons();
 	
 	JScrollPane scrollTop;
 	PanelLayout top;

@@ -37,15 +37,29 @@ public class GUI implements Observer{
 		
 		@Override
 		public ImageIcon getNotch() {
-			return new ImageIcon("icons/notch.png");
+			return new ImageIcon(Main.class.getResource( "/resources/notch.png" ));
 		}
 
 		@Override
 		public ImageIcon getCross() {
-			return new ImageIcon("icons/cross.png");
+			return new ImageIcon(Main.class.getResource( "/resources/cross.png" ));
 		}
 		
 	}
+	
+	public static class SmallIcons extends Icons{
+		@Override
+		public ImageIcon getNotch() {
+			return new ImageIcon(Main.class.getResource( "/resources/notch_small.png" ));
+		}
+
+		@Override
+		public ImageIcon getCross() {
+			return new ImageIcon(Main.class.getResource( "/resources/cross_small.png" ));
+		}
+	}
+	
+	
 	
 	static class Restart implements ActionListener{
 
