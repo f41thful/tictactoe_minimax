@@ -115,7 +115,7 @@ public class Minimax<T> {
 	/*
 	 * Take the first element that has the value that has been selected.
 	 */
-	public T getSol(Tree<T> tree){
+	public static <T> T getSol(Tree<T> tree){
 		Object o = tree.getData( KEY );
 		if(o == null) return null;
 		if(tree.getChildren() == null || tree.getChildren().size() == 0) return tree.getElem();

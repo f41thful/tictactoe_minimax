@@ -6,11 +6,16 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import lib.tree.ITreeVisitor;
+import lib.tree.Tree;
+
 import utils.FactoryGUI;
 
 import GUI.GUI;
 import Game.Board.SquareState;
+import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
+import TreeGUI.BoardTreetoTreeGUI;
 
 public class TicTacToeGameManager implements ActionListener{
 	
@@ -32,13 +37,22 @@ public class TicTacToeGameManager implements ActionListener{
 		int col = (int) button.getClientProperty( "col" );
 		b.set( row, col, nextValue );
 		
-		nextValue = nextValue.alternate();
+		//nextValue = nextValue.alternate();
 		
 		calculateAIMove(b);
+		//nextValue = nextValue.alternate();
 	}
 	
 	public void calculateAIMove(Board b){
+		Tree<Board> tree = FacadeAI.generateNaive( b, 6, 2 );
+		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
+		tree.applyVisitors( new ITreeVisitor[]{v} );
+		
+		Board newBoard = Minimax.getSol( tree );
+		
+		// the two boards should be different in only one square.
+		b.syncBoard( newBoard );
+		
 		gui.addSideBoard(FactoryGUI.getPanel( b ).getPanel());
-		gui.pack();
 	}
 }

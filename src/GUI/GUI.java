@@ -87,7 +87,8 @@ public class GUI implements Observer{
 		frame.add(topPanel);
 		
 		
-		frame.pack();
+		//frame.pack();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 	}
@@ -99,7 +100,7 @@ public class GUI implements Observer{
 		if(m.type == MessageType.WINNER && m.value != Winner.NONE){
 			winnerName.setText(((Winner)m.value).toString());
 			winnerPanel.setVisible(true);
-			frame.pack();
+			//frame.pack();
 		}
 	}
 	
@@ -145,7 +146,7 @@ public class GUI implements Observer{
 
 
 	public void pack(){
-		frame.pack();
+		//frame.pack();
 	}
 	
 }

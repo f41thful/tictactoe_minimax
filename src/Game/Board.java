@@ -157,6 +157,16 @@ public class Board extends Observable{
 		else if(notch < cross) return SquareState.NOTCH;
 		else return equal;
 	}
+	
+	public void syncBoard(Board b){
+		for(int i = 0; i < b.bR; i++){
+			for(int j = 0; j < bC; j++){
+				if(b.get( i, j ) != get(i, j)){
+					set(i, j, b.get(i, j));
+				}
+			}
+		}
+	}
 
 
 	private Winner calculateWinner(){
