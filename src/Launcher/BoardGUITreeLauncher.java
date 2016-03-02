@@ -28,7 +28,7 @@ public class BoardGUITreeLauncher {
 		b.set( 0, 1, SquareState.NOTCH ); 
 		b.set( 1, 1, SquareState.NOTCH );
 
-		BoardTreetoTreeGUI v = FactoryGUI.getPanel( b );
+		BoardTreetoTreeGUI v = FactoryGUI.getPanel( b, 6, 2 );
 	
 		JFrame frame = FactoryGUI.getJFrame();
 		frame.add( v.getPanel() );

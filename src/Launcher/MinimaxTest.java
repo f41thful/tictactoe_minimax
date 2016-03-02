@@ -60,7 +60,7 @@ public class MinimaxTest {
 	
 	public static void main(String[] args) {
 		Integer[] array = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		Minimax<Integer[]> minimax = new Minimax<>( st, 2, Integer.MAX_VALUE );
+		Minimax<Integer[]> minimax = new Minimax<>( st, 2, 2 );
 		Tree<Integer[]> tree = minimax.generate( array );
 		System.out.println(tree.toPostOrderStringWithBranchId(new Tree.GetString[]{
 				new GetValue()

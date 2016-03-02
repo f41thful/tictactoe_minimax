@@ -1,6 +1,7 @@
 package utils;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -25,10 +26,16 @@ public class FactoryGUI {
 		return frame;
 	}
 	
-	public static BoardTreetoTreeGUI getPanel(Board b){
-		Tree<Board> tree = FacadeAI.generateNaive( b, 6, 2 );
+	public static BoardTreetoTreeGUI getPanel(Board b, int depth, int height){
+		Tree<Board> tree = FacadeAI.generateNaive( b, depth, height );
 		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
 		tree.applyVisitors( new ITreeVisitor[]{v} );
 		return v;
+	}
+	
+	public static JComponent getPanel(Tree<Board> tree){
+		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
+		tree.applyVisitors( new ITreeVisitor[]{v} );
+		return v.getPanel();
 	}
 }

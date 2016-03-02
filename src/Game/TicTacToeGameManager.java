@@ -18,7 +18,8 @@ import Logic.Minimax.IMinimaxStructure;
 import TreeGUI.BoardTreetoTreeGUI;
 
 public class TicTacToeGameManager implements ActionListener{
-	
+	public static final int DEPTH = 2;
+	public static final int BRANCH = 9;
 	public GUI gui;
 	Board b;
 	
@@ -44,7 +45,7 @@ public class TicTacToeGameManager implements ActionListener{
 	}
 	
 	public void calculateAIMove(Board b){
-		Tree<Board> tree = FacadeAI.generateNaive( b, 6, 2 );
+		Tree<Board> tree = FacadeAI.generateNaive( b, DEPTH, BRANCH );
 		BoardTreetoTreeGUI v = new BoardTreetoTreeGUI();
 		tree.applyVisitors( new ITreeVisitor[]{v} );
 		
@@ -53,6 +54,6 @@ public class TicTacToeGameManager implements ActionListener{
 		// the two boards should be different in only one square.
 		b.syncBoard( newBoard );
 		
-		gui.addSideBoard(FactoryGUI.getPanel( b ).getPanel());
+		gui.addSideBoard(FactoryGUI.getPanel(tree));
 	}
 }

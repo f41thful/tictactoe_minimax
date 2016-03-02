@@ -43,6 +43,22 @@ public class GUI implements Observer{
 		
 	}
 	
+	static class Restart implements ActionListener{
+
+		GUI gui;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(gui != null)
+				gui.dispose();
+		}
+		
+		public void setGui(GUI gui){
+			this.gui = gui;
+		}
+		
+	}
+	
 	public static NormalIcons defaultIcons = new NormalIcons();
 	
 	public static ActionListener defaultAl = new ActionListener(){
@@ -50,7 +66,9 @@ public class GUI implements Observer{
 			public void actionPerformed(ActionEvent arg0) {
 	}};
 	
-	ActionListener restart;
+	public static Restart defaultRestart = new Restart();
+	
+	Restart restart;
 	Observer observer;
 	BoardGUI board;
 	
@@ -64,10 +82,14 @@ public class GUI implements Observer{
 	JPanel topPanel;
 
 	public GUI(){
-		this(new Icons(), defaultAl, defaultAl);
+		this(new Icons(), defaultAl, defaultRestart);
 	}
 	
-	public GUI(Icons icons, ActionListener al, ActionListener restart){
+	public GUI(Icons ic, ActionListener al){
+		this(ic, al, defaultRestart);
+	}
+	
+	public GUI(Icons icons, ActionListener al, Restart restart){
 		this.restart = restart;
 		gamePanel = new JPanel();
 		BoxLayout gamePanelLayout = new BoxLayout(gamePanel, BoxLayout.Y_AXIS);
@@ -149,4 +171,7 @@ public class GUI implements Observer{
 		//frame.pack();
 	}
 	
+	public void dispose(){
+		frame.dispose();
+	}
 }
