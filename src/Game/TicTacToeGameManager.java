@@ -13,6 +13,7 @@ import utils.FactoryGUI;
 
 import GUI.GUI;
 import Game.Board.SquareState;
+import Game.Board.Winner;
 import Logic.Minimax;
 import Logic.Minimax.IMinimaxStructure;
 import TreeGUI.BoardTreetoTreeGUI;
@@ -40,8 +41,8 @@ public class TicTacToeGameManager implements ActionListener{
 		b.set( row, col, nextValue );
 		
 		//nextValue = nextValue.alternate();
-		
-		calculateAIMove(b);
+		if(b.getWinner() == Winner.NONE)
+			calculateAIMove(b);
 		//nextValue = nextValue.alternate();
 	}
 	
