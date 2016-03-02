@@ -10,6 +10,9 @@ public class FacadeAI {
 	public static Tree<Board> generateNaive(Board b, int depth, int breadth){
 		IMinimaxStructure<Board> st = new AIMinimaxNaive( Winner.NOTCH, SquareState.CROSS );
 		Minimax<Board> m = new Minimax<>( st, depth, breadth);
-		return m.generate( b );
+		//otherwise b would be the content of the root of the tree, and it will be
+		//changed when the main board is changed to update the AI movement.
+		Board newBoard = new Board(b);
+		return m.generate( newBoard );
 	}
 }

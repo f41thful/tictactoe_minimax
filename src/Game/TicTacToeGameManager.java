@@ -18,8 +18,9 @@ import Logic.Minimax.IMinimaxStructure;
 import TreeGUI.BoardTreetoTreeGUI;
 
 public class TicTacToeGameManager implements ActionListener{
+	// cannot be 0
 	public static final int DEPTH = 2;
-	public static final int BRANCH = 9;
+	public static final int BRANCH = 2;
 	public GUI gui;
 	Board b;
 	

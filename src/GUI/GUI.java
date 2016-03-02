@@ -19,6 +19,7 @@ import javax.swing.WindowConstants;
 import Game.Board.Message;
 import Game.Board.MessageType;
 import Game.Board.Winner;
+import Launcher.Main;
 
 public class GUI implements Observer{
 	
@@ -46,15 +47,18 @@ public class GUI implements Observer{
 	static class Restart implements ActionListener{
 
 		GUI gui;
+		JFrame frame;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(gui != null)
-				gui.dispose();
+			if(frame != null)
+				frame.dispose();
+			Main.main( new String[]{});
 		}
 		
-		public void setGui(GUI gui){
+		public void setGui(GUI gui, JFrame frame){
 			this.gui = gui;
+			this.frame = frame;
 		}
 		
 	}
@@ -102,6 +106,7 @@ public class GUI implements Observer{
 		gamePanel.add( winnerPanel );
 
 		frame = new JFrame();
+		restart.setGui( this, frame );
 		topPanel = new JPanel();
 		topPanel.setLayout( new BoxLayout(topPanel, BoxLayout.X_AXIS) );
 		topPanel.add(gamePanel);
