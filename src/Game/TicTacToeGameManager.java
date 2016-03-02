@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import utils.FactoryGUI;
+
 import GUI.GUI;
 import Game.Board.SquareState;
 import Logic.Minimax.IMinimaxStructure;
@@ -31,5 +33,12 @@ public class TicTacToeGameManager implements ActionListener{
 		b.set( row, col, nextValue );
 		
 		nextValue = nextValue.alternate();
+		
+		calculateAIMove(b);
+	}
+	
+	public void calculateAIMove(Board b){
+		gui.addSideBoard(FactoryGUI.getPanel( b ).getPanel());
+		gui.pack();
 	}
 }

@@ -10,6 +10,7 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -59,7 +60,8 @@ public class GUI implements Observer{
 	JPanel winnerPanel;
 	
 	JPanel gamePanel;
-	JPanel sideBoard;
+	JComponent sideBoard;
+	JPanel topPanel;
 
 	public GUI(){
 		this(new Icons(), defaultAl, defaultAl);
@@ -78,15 +80,14 @@ public class GUI implements Observer{
 		gamePanel.add( winnerPanel );
 
 		frame = new JFrame();
-		JPanel topPane = new JPanel();
-		topPane.setLayout( new BoxLayout(topPane, BoxLayout.X_AXIS) );
-		topPane.add(gamePanel);
-		addSideBoard(sideBoard, topPane);
-		frame.add(topPane);
+		topPanel = new JPanel();
+		topPanel.setLayout( new BoxLayout(topPanel, BoxLayout.X_AXIS) );
+		topPanel.add(gamePanel);
+		addSideBoard(sideBoard);
+		frame.add(topPanel);
 		
 		
 		frame.pack();
-		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
 	}
@@ -132,16 +133,19 @@ public class GUI implements Observer{
 		return winnerPanel;
 	}
 	
-	public void addSideBoard(JPanel panel, JPanel to){
+	public void addSideBoard(JComponent panel){
 		if(sideBoard != null){
-			to.remove( sideBoard );
+			topPanel.remove( sideBoard );
 		}
 		
 		sideBoard = panel;
 		if(sideBoard != null)
-			to.add( sideBoard );
+			topPanel.add( sideBoard );
 	}
 
 
+	public void pack(){
+		frame.pack();
+	}
 	
 }
