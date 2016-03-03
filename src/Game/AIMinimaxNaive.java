@@ -34,8 +34,32 @@ public class AIMinimaxNaive implements IMinimaxStructure<Board>{
 	@Override
 	public int evaluate(Board board) {
 		Winner winner = board.getWinner();
-		if(winner == myPlayer) return 2;
-		else if(winner == Winner.NONE) return 1;
+		if(winner == myPlayer) return 80;
+		else if(winner == Winner.CROSS) return 0;
+		else if(board.get(1, 1) == SquareState.NOTCH) return 6;
+		
+		if(winner == Winner.NONE){
+			int value = 1;
+			if(board.get(0,0) == SquareState.NOTCH){
+				value += 1;
+				if(board.get( 2, 2 ) == SquareState.CROSS) value += 6;
+			}
+			if(board.get(0,2) == SquareState.NOTCH){
+				value += 1;
+				if(board.get( 2, 0 ) == SquareState.CROSS) value += 6;
+			}
+
+			if(board.get(2,0) == SquareState.NOTCH){
+				value += 1;
+				if(board.get( 0, 2 ) == SquareState.CROSS) value += 6;
+				}
+			if(board.get(2,2) == SquareState.NOTCH){
+				value += 1;
+				if(board.get(2,2) == SquareState.NOTCH) value += 6;
+			}
+			
+			return value;
+		}
 		else return 0;
 	}
 	
